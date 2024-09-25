@@ -36,7 +36,6 @@ const SignIn = () => {
       <div className="glassmorphism-card">
         <div>
            <div className="logo-container">
-            {/* <div className="trinity-knot"></div>   */}
             <div className="logo-text">
               <h1>Trinity Care</h1>
               <h2>Hospital</h2>
