@@ -1,0 +1,376 @@
+body{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* overflow: hidden; */
+ }
+ .container-fluid {
+   /* width: 100%; */
+   min-height: 550px;
+   align-items: center;
+   background: #a6f0f0;
+   
+ }
+
+.navbar-toggler {
+  border: none;
+}
+.navbar-toggler:focus,
+.btn-close:focus {
+  box-shadow: none;
+  outline: none;
+}
+.navbar-brand {
+  display: flex;
+  align-items: center;
+}
+.nav-link {
+  position: relative;
+}
+.nav-link::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 2px;
+  width: 0;
+  visibility: hidden;
+  background-color: #ffa500;
+  transition: 0.3s ease-in;
+}
+.nav-link:hover::before {
+  width: 100%;
+  visibility: visible;
+}
+.nav-item .nav-link {
+  font-size: 18px;
+  font-family: sans-serif;
+  margin: 0 30px;
+  font-weight: 600;
+  color: #008080;
+}
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  color: #008080;
+}
+
+.logo .trinity-knot {
+  position: relative;
+}
+
+.trinity-knot:before,
+.trinity-knot:after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 55px;
+  background: #008080; /* Teal color */
+  left: 30px;
+  /* margin-top: 10px; */
+  top: 0;
+}
+
+.trinity-knot:before {
+  transform: rotate(60deg);
+}
+
+.trinity-knot:after {
+  transform: rotate(-60deg);
+}
+.logo-container {
+  display: flex;
+  align-items: center;
+  max-width: 200px; 
+  overflow: hidden; 
+}
+
+.logo-text h1 {
+  font-size:1.0rem;
+  margin: 0;
+  font-weight: bold;
+  color: #008080;
+  text-overflow: ellipsis; 
+  white-space: nowrap;
+}
+
+.logo-text h2 {
+  font-size:1.0rem;
+  margin: 0;
+  color: #ffa500;
+  text-overflow: ellipsis; 
+  white-space: nowrap;
+  overflow: hidden;
+}
+.HomePageText {
+  font-size: 1.25rem; 
+  color: #0e4747;
+  word-wrap: break-word; 
+  overflow-wrap: break-word; 
+}
+.Homepagetext {
+  font-size: 3rem; 
+}
+.text-section {
+  flex: 1;  
+  overflow-y: auto; 
+  max-height: 400px; 
+}
+.image-section {
+  flex: 1; 
+  display: flex;
+  overflow: hidden;
+}
+.landingImg {
+  max-width: 100%;
+  height: auto; 
+}
+.specialities-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 20px;
+}
+.speciality-item {
+  text-align: center;
+  text-decoration: none;
+  color: #000;
+}
+.speciality-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  text-decoration: none; 
+  transition: transform 0.3s ease; 
+}
+
+.speciality-item img {
+  transition: transform 0.3s ease
+}
+
+.speciality-item:hover img {
+  transform: translateY(-5px); 
+}
+
+.speciality-item:hover p {
+  color: #084949; 
+}
+.Topdoctors{
+  transition: transform 0.3s ease
+}
+.Topdoctors:hover{
+  transform: translateY(-5px); 
+
+}
+
+.landingBtn {
+  background:#084949;
+  border: none;
+  padding: 10px 20px;
+  transition: background-color 0.3s;
+  border-radius: 20px;
+}
+.landingBtn:hover {
+  background-color: #067373; 
+}
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+}
+
+.glassmorphism-card {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  padding: 20px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 25px;
+  /* text-align: center; */
+  overflow: hidden;
+  position: relative;
+}
+
+.glassmorphism-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(0, 0, 0, 0.1)
+  );
+  z-index: -1;
+  border-radius: 25px;
+}
+
+.glassmorphism-card h4 {
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #0056b3;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.glassmorphism-card .formInput {
+  width: calc(100% - 20px);
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.3);
+  color: #333;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+  font-size: 1rem;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.glassmorphism-card input:focus {
+  background: rgba(255, 255, 255, 0.5);
+  transform: scale(1.02);
+  outline: none;
+}
+
+.glassmorphism-card input::placeholder {
+  color: #aaa;
+}
+
+.glassmorphism-card button {
+  width: 100%;
+  padding: 12px;
+  background: #008080;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.glassmorphism-card button:hover {
+  background: #0e4747;
+  transform: scale(1.05);
+}
+
+.glassmorphism-card button:active {
+  background: #0057ff;
+  transform: scale(1);
+}
+.SignInLink {
+  text-decoration: none;
+  color:#008080;
+}
+.register-forget {
+  margin: 0 20px;
+}
+
+.register-forget label {
+  display: flex;
+  align-items: center;
+}
+.register-forget input[type="checkbox"] {
+  margin-right: 10px;
+}
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.bar {
+  display: inline-block;
+  width: 10px;
+  height: 60px;
+  margin: 0 5px;
+  background: #000;
+  animation: barAnimation 1s infinite;
+}
+
+@keyframes barAnimation {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.5);
+  }
+}
+@media (max-width: 992px) {
+  *{
+    overflow-x: hidden;
+    /* border: 2px solid red; */
+  }
+  .navbar-nav {
+    flex-direction: column; 
+    width: 100%; 
+  }
+  .nav-item {
+    text-align: center; 
+    width: 100%; 
+  }
+  .logo-container {
+    max-width: 150px; 
+  }
+  .navbar-brand h1, .navbar-brand h2 {
+    font-size: 1.2rem;  
+  }
+  .trinity-knot:before,
+  .trinity-knot:after {
+    display: none;
+  }
+  .logo-text h1{
+    font-size: 0.6rem;
+  }
+.logo-text h2{
+  font-size: 0.5rem;
+}
+.landingBtn {
+  width: 50%;
+  padding: 8px;
+  font-size: 12px;
+}
+ .text-section{
+  margin-top: 50px;
+ }
+.HomePageText {
+  font-size: 1rem; 
+}
+.Homepagetext{
+  font-size: 2.5rem;
+}
+}
+@media (max-width: 576px) {
+  *{
+    overflow-x: hidden;
+    /* border: 2px solid red; */
+  }
+  .navbar-nav {
+    font-size: 0.9rem; 
+  }
+  .profile {
+    width: 35px; 
+    height: 35px; 
+  }
+.Homepagetext {
+  font-size: 1.75rem;
+}
+.HomePageText {
+  font-size: 0.9rem; 
+}
+}
+
+
+
