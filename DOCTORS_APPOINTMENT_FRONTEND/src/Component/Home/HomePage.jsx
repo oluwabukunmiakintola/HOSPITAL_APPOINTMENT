@@ -2,6 +2,7 @@ import React from 'react';
 import image from '../../assets/docheader.png';
 import SpecialityMenu from '../Speciality/SpecialityMenu';
 import TopDoctors from '../TopDoctors/TopDoctors';
+import BookAppointment from '../Book Appointment/BookAppointment';
 
 const HomePage = () => {
   return (
@@ -30,6 +31,7 @@ const HomePage = () => {
       </div>
       <SpecialityMenu />
       <TopDoctors />
+      <BookAppointment/>
     </>
   );
 };
