@@ -50,7 +50,7 @@ const Signup = () => {
       navigate('/signIn');
 
       axios.post(url,values)
-      .then(()=>{
+      .then((result)=>{
         alert(result.data.message)
         console.log(result);
       })

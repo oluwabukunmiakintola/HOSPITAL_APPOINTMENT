@@ -7,6 +7,20 @@ const cors = require("cors")
 const userRouter = require("./routes/user.route.js")
 
 // middleware
+require("dotenv").config()
+app.use(cors())
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
+app.use("/user",userRouter)
+const URI = process.env.MONGO_DB_URI
+mongoose.connect(URI)
+.then(()=> {
+    console.log("connected to mongo DB");
+})
+.catch((err)=> {
+    console.log(err);
+})
+
 app.listen(PORT,(err)=>{
     if(err){
         console.log("Node is not working");
@@ -14,18 +28,3 @@ app.listen(PORT,(err)=>{
         console.log(`Server is running on port ${PORT}`);
     }
 })
-app.use(express.urlencoded({extended: true}))
-app.use("/user",userRouter)
-app.use(express.json())
-require("dotenv").config()
-const URI = process.env.MONGO_DB_URI
-console.log(URI);
-app.use(cors())
-mongoose.connect(URI)
-.then(()=> {
-    console.log("connected to momgo DB");
-})
-.catch((err)=> {
-    console.log(err);
-})
-
