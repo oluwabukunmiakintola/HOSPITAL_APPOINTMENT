@@ -29,7 +29,11 @@ const validationSchema = yup.object({
 });
 
 const Signup = () => {
+<<<<<<< HEAD
   let url="http://"
+=======
+  let url="http://localhost:5000/user/signup"
+>>>>>>> origin/Moyinoluwa
   const navigate = useNavigate();
   
   const formik = useFormik({
