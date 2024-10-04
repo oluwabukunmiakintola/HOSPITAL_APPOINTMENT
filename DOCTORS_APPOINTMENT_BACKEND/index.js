@@ -4,6 +4,7 @@ const app = express()
 const PORT = 5000
 const mongoose = require('mongoose')
 const cors = require("cors")
+const userRouter = require("./routes/user.route.js")
 
 // middleware
 app.listen(PORT,(err)=>{
@@ -14,6 +15,7 @@ app.listen(PORT,(err)=>{
     }
 })
 app.use(express.urlencoded({extended: true}))
+app.use("/user",userRouter)
 app.use(express.json())
 require("dotenv").config()
 const URI = process.env.MONGO_DB_URI

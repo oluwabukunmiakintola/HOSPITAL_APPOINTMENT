@@ -1,28 +1,51 @@
 const userModel = require("../model/user.model")
-const bcrypt = require("bcrypt")
-const validator = require("email-validator")
+const bcrypt = require("bcryptjs")
+const validator = require("email-validator");
+const generateTokenAndSetCookies = require("../utilities/generateTokenAndSetCookies");
 
 const signUpUser = async (req ,res) => {
-    const {email, password} = req.body
+   const {email, password, firstName, lastName} = req.body;
 
-    // email validation 
-    if(!validator.validate(email)){
-        return res.status(400).json({message: "Invalid email"})
+   try{
+    if(! email || !password || !firstName || !lastName){
+        throw new Error("All fields are required")
     }
 
-    // to check if email already exist 
-    const existingUser = await userModel.findOne({email});
-    if(existingUser){
-        return res.status(400).json({message: "Email already exist"})
-    }
+        const userAlreadyExists = await userModel.findOne({email})
+        if(userAlreadyExists){
+            return res.status(400).json({success:false, message:"user already exists"})
+        }
 
-    // password hash on by bcrypt
-    const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await bcrypt.hash(password, 10)
+        const verificationToken = Math.floor(10000000 + Math.random()* 90000000).toString()
 
-    const user = new userModel({email, password: hashedPassword})
-    user.save()
-    .then(() =>res.send({message: "SIgn Up successful"}))
-    .catch((err)=> res.status(500).send({err, error:"Error creating User"}))
+
+        const user = new userModel ({
+            email,
+            password:hashedPassword,
+            firstName,
+            lastName,
+            verificationToken,
+            verificationTokenExpiresAt: Date.now() + 10 * 60 *1000
+        })
+
+        await user.save()
+
+        //jwt 
+        generateTokenAndSetCookies(res, user._id)
+        res.status(201).json({
+            success:true,
+            message:"User created successfully",
+            user:{
+                ...user._doc,
+                password:undefined
+            }
+        })
+
+   }catch (err){
+    console.log({err});
+    return res.status(400).json({success:false, message:err.message})
+   }
 }
 
 const signInuser =async (req, res)=>{
@@ -44,6 +67,18 @@ const signInuser =async (req, res)=>{
     res.send({message: "Signed in successfully"})
 }
 
+const userDashboard = async (req, res) => {
+    const user = await userModel.findById(req.user._id)
+    if(!user){
+        return res.status(400).json({message: "User not found"})
+    }
+    res.json({
+        message: "Welcome to user dashboard",
+        id:user._id,
+        email:user.email,
+    })
+}
+
 module.exports = {
-    signUpUser, signInuser
+    signUpUser, signInuser, userDashboard
 }
