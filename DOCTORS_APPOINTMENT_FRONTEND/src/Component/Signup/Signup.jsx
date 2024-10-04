@@ -30,7 +30,7 @@ const validationSchema = yup.object({
 
 const Signup = () => {
 
-  let url="http://localhost:5000/user/signup"
+  let url="https://hospital-appointment-ashen.vercel.app/user/signup"
 
   const navigate = useNavigate();
   
