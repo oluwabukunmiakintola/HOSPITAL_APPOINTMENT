@@ -29,7 +29,10 @@ const validationSchema = yup.object({
 });
 
 const Signup = () => {
+
   let url="http://localhost:5000/user/signup"
+
+ 
   const navigate = useNavigate();
   
   const formik = useFormik({
@@ -54,19 +57,20 @@ const Signup = () => {
       .then((result)=>{
         alert(result.data.message)
         console.log(result);
-        swal({
-          text:"User created successfully",
-          icon:"success"
-        })
+        // swal({
+        //   title: "Success",
+        //   text:"User created successfully",
+        //   icon:"success"
+        // })
       })
       .catch((err)=>{
         console.log(err);
-        swal({
-          text:err,
-           icon:"error"
+        // swal({
+        //   title: "Error",
+        //   text:"User not Registered",
+        //    icon:"error"
 
-        })
-        
+        // })
       })
     },
     validationSchema
