@@ -54,22 +54,20 @@ const Signup = () => {
 
       axios.post(url,values)
       .then((result)=>{
-        alert(result.data.message)
         console.log(result);
-        // swal({
-        //   title: "Success",
-        //   text:"User created successfully",
-        //   icon:"success"
-        // })
+        swal({
+          title: "Success",
+          text:"User created successfully",
+          icon:"success"
+        })
       })
       .catch((err)=>{
         console.log(err);
-        // swal({
-        //   title: "Error",
-        //   text:"User not Registered",
-        //    icon:"error"
-
-        // })
+        swal({
+          title: "Error",
+          text:"User not Registered",
+           icon:"error"
+        })
       })
     },
     validationSchema
