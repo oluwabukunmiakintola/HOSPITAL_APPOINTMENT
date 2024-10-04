@@ -54,7 +54,7 @@ const Signup = () => {
         alert(result.data.message)
         console.log(result);
       })
-      .catch(()=>{
+      .catch((err)=>{
         console.log(err);
         
       })

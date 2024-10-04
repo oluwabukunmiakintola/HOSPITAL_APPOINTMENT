@@ -19,11 +19,10 @@ app.use("/user",userRouter)
 app.use(express.json())
 require("dotenv").config()
 const URI = process.env.MONGO_DB_URI
-console.log(URI);
 app.use(cors())
 mongoose.connect(URI)
 .then(()=> {
-    console.log("connected to momgo DB");
+    console.log("connected to mongo DB");
 })
 .catch((err)=> {
     console.log(err);
