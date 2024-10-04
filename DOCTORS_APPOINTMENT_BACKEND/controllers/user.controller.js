@@ -5,9 +5,10 @@ const generateTokenAndSetCookies = require("../utilities/generateTokenAndSetCook
 
 const signUpUser = async (req ,res) => {
    const {email, password, firstName, lastName} = req.body;
-
+   console.log(req.body);
+   
    try{
-    if(! email || !password || !firstName || !lastName){
+    if(!email || !password || !firstName || !lastName){
         throw new Error("All fields are required")
     }
 
