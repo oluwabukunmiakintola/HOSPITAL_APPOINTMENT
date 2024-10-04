@@ -13,18 +13,19 @@ const Navbar = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
+  const handleLogout = () => {
+    setToken(false);
+    setDropdownOpen(false); // Close the dropdown on logout
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <div className="container">
         <Link className="navbar-brand" to="#">
-          <div className="logo-container">
-            <div className="trinity-knot"></div>
-            <div className="logo-text">
-              <div>
-              <h1 className="mb-0 ">Trinity Care</h1>
-              <h2 className="mb-0 ">Hospital</h2>
-              </div>
-            </div>
+          <div onClick={() => navigate("/")} className="trinity-knot"></div>
+          <div className="logo-text">
+            <h1 className="mb-0">Trinity Care</h1>
+            <h2 className="mb-0">Hospital</h2>
           </div>
         </Link>
         <button
@@ -57,29 +58,26 @@ const Navbar = () => {
         </div>
         <div className="d-flex align-items-center">
           {token ? (
-            <div 
-              className="dropdown hover-dropdown position-relative"
-              onMouseEnter={handleDropdownToggle}
-              onMouseLeave={handleDropdownToggle}
-            >
+            <div className="dropdown position-relative">
               <img
                 src={profile}
                 alt="Profile"
                 className="profile"
                 style={{ width: "40px", height: "40px", borderRadius: "50%" }}
+                onClick={handleDropdownToggle}
               />
-              <span style={{ cursor: "pointer" }}>
+              <span onClick={handleDropdownToggle} style={{ cursor: "pointer" }}>
                 <FontAwesomeIcon icon={faCaretDown} />
               </span>
-              <ul className={`dropdown-menu dropdown-menu-end  ${dropdownOpen ? 'show' : ''}`} style={{ border: 'none', position: 'absolute', zIndex: 1000 }}>
+              <ul className={`dropdown-menu dropdown-menu-end ${dropdownOpen ? 'show' : ''}`} style={{ border: 'none', position: 'absolute', zIndex: 1000 }}>
                 <li>
-                  <Link className="dropdown-item" to="/my-profile">My Profile</Link>
+                  <Link className="dropdown-item" to="/my-profile" onClick={() => setDropdownOpen(false)}>My Profile</Link>
                 </li>
                 <li>
-                  <Link className="dropdown-item" to="/my-appointment">My Appointment</Link>
+                  <Link className="dropdown-item" to="/my-appointment" onClick={() => setDropdownOpen(false)}>My Appointment</Link>
                 </li>
                 <li>
-                  <p onClick={() => setToken(false)} className="dropdown-item">Logout</p>
+                  <p onClick={handleLogout} className="dropdown-item">Logout</p>
                 </li>
               </ul>
             </div>

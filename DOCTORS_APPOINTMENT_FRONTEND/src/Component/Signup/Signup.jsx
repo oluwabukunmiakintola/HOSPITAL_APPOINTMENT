@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import logo from '../../assets/Logo.jpg';
+import axios from 'axios';
 
 const validationSchema = yup.object({
   firstName: yup.string()
@@ -28,6 +28,7 @@ const validationSchema = yup.object({
 });
 
 const Signup = () => {
+  let url="https://hospital-appointment-gy5e.onrender.com"
   const navigate = useNavigate();
   
   const formik = useFormik({
@@ -47,6 +48,16 @@ const Signup = () => {
       console.log(values);
 
       navigate('/signIn');
+
+      axios.post(url,values)
+      .then(()=>{
+        alert(result.data.message)
+        console.log(result);
+      })
+      .catch(()=>{
+        console.log(err);
+        
+      })
     },
     validationSchema
   });

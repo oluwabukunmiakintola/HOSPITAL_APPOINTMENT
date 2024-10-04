@@ -12,7 +12,7 @@ const SpecialityMenu = () => {
       </p>
       <div className="row specialities-container">
         {SpecialityData.map((item, index) => (
-          <div className="col-6 col-md-4 col-lg-3 mb-4" key={index}>
+          <div className="col-6 col-md-4 col-lg-2 mb-4" key={index}>
             <Link onClick={() => scrollTo(0, 0)} to={`/doctors/${item.speciality}`} className="speciality-item text-center">
               <img src={item.image} alt={item.speciality} className="img-fluid" style={{ maxWidth: '60px', height: 'auto' }} />
               <p>{item.speciality}</p>

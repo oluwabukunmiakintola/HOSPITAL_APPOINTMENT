@@ -13,13 +13,13 @@ import Contact from './Component/Contact/Contact';
 import MyProfile from './Component/MyProfile/MyProfile';
 import MyAppointment from './Component/My Appointment/MyAppointment';
 import Appointment from './Component/Appointment/Appointment';
-// import Navbar from './Component/Navbar/Navbar';
+import NotFound from './Component/Error/NotFound';
 
 function App() {
   return (
     <>
-      {/* <Navbar />  */}
       <Routes>
+        <Route path='*' element={<NotFound/>}/>
         <Route path='/'element={<Layout/>}>
           <Route path='' element={<HomePage />} />
           <Route path="doctors" element={<Doctors />} />
@@ -40,6 +40,7 @@ function App() {
           <Route path="*" element={<Navigate to="/signIn" />} /> {/* Catch-all for undefined routes */}
         </Route>
       </Routes>
+      
     </>
   );
 }
