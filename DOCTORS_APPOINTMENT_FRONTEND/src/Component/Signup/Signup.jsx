@@ -30,7 +30,7 @@ const validationSchema = yup.object({
 
 const Signup = () => {
 
-  let url="https://hospital-appointment-ashen.vercel.app/user/signup"
+  let url="https://hospital-ooo.vercel.app/user/signup"
 
   const navigate = useNavigate();
   
@@ -50,7 +50,7 @@ const Signup = () => {
       
       console.log(values);
 
-      navigate('/signIn');
+      // navigate('/signIn');
 
       axios.post(url,values)
       .then((result)=>{
