@@ -28,7 +28,7 @@ const validationSchema = yup.object({
 });
 
 const Signup = () => {
-  let url="http://localhost:5000/user/signup"
+  let url="https://hospital-appointment-gy5e.onrender.com"
   const navigate = useNavigate();
   
   const formik = useFormik({
@@ -54,7 +54,7 @@ const Signup = () => {
         alert(result.data.message)
         console.log(result);
       })
-      .catch((err)=>{
+      .catch(()=>{
         console.log(err);
         
       })
