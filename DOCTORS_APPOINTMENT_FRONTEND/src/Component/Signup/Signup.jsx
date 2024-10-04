@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
+import swal from "sweetalert"
 
 const validationSchema = yup.object({
   firstName: yup.string()
@@ -53,9 +54,18 @@ const Signup = () => {
       .then((result)=>{
         alert(result.data.message)
         console.log(result);
+        swal({
+          text:"User created successfully",
+          icon:"success"
+        })
       })
-      .catch(()=>{
+      .catch((err)=>{
         console.log(err);
+        swal({
+          text:err,
+           icon:"error"
+
+        })
         
       })
     },
