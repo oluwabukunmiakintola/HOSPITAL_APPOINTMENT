@@ -117,7 +117,7 @@ useEffect(()=>{
           ))}
         </div>
 
-        <div className='d-flex'>
+        <div className='d-flex flex-wrap justify-content-space-between'>
           {docSlots.length && docSlots[slotIndex].map((item,index)=>(
             <p key={index}>
               {item.time.toLowerCase()}
