@@ -83,7 +83,7 @@ const Navbar = () => {
             </div>
           ) : (
             <button
-              onClick={() => navigate("/signUp")}
+              onClick={() => navigate("/user/signUp")}
               className="btn btn-primary mt-2 fw-bold"
             >
               Create Account
