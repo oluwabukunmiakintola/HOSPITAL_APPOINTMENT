@@ -10,7 +10,10 @@ dotenv.config()
 
 //Function to generate a verification token
 const generateVerificationToken = (userId) => {
-    return jwt.sign({ userId }), process.env.VERIFICATION_SECRET
+    if (!process.env.VERIFICATION_SECRET) {
+        throw new Error("VERIFICATION_SECRET environment variable is not set")
+    }
+    return jwt.sign({ userId }, process.env.VERIFICATION_SECRET)
 }
 
 const sendVerificationEmail = async (user) => {
@@ -73,26 +76,26 @@ const signUpUser = async (req, res) => {
 }
 
 const verifiyEmail = async (req, res) => {
-    const {token, userId} = req.query
+    const { token, userId } = req.query
 
-    try{
+    try {
         const user = await userModel.findById(userId)
-        if (!user){
-            return res.status(400).json({message: "User not Found"})
+        if (!user) {
+            return res.status(400).json({ message: "User not Found" })
         }
 
         const isValidToken = jwt.verify(token, process.env.VERIFICATION_SECRET)
-        if (!isValidToken){
-            return res.status(400).json({message: "Invalid Token"})
+        if (!isValidToken) {
+            return res.status(400).json({ message: "Invalid Token" })
         }
-        user.isEmailVerified =true
+        user.isEmailVerified = true
         await user.save()
 
-        res.json({message:"Email verified successfully"})
+        res.json({ message: "Email verified successfully" })
     }
-    catch(err){
-        console.log({err});
-        return res.status(400).json({message: err.message})
+    catch (err) {
+        console.log({ err });
+        return res.status(400).json({ message: err.message })
     }
 }
 
