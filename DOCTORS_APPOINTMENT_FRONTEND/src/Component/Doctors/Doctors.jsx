@@ -55,7 +55,9 @@ const Doctors = () => {
         <div className="row">
           {filterDoc.map((item) => (
             <div
-              onClick={() => navigate(`appointment/${item._id}`)}
+              onClick={()=>{
+                navigate(`/appointment/${item._id}`);  
+              }}
               className="col-12 col-md-12 col-lg-6 mb-4"
               key={item._id}
             >

@@ -29,7 +29,7 @@ const BookAppointment = () => {
               src={image} 
               className="bookImage w-25"
               alt="Background" 
-              style={{top:"2000px", position:"absolute"}}
+              style={{top:"2500px", position:"absolute"}}
             />
           </div>
       </div>

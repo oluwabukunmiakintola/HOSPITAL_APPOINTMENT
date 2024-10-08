@@ -14,6 +14,8 @@ import doc7 from "./doc7.png";
 import doc8 from "./doc8.png";
 import doc9 from "./doc9.png"
 import doc10 from "./doc10.png"
+import doc11 from "./doc11.png"
+import doc12 from "./doc12.png"
 
 
 
@@ -135,6 +137,24 @@ export const doctors = [
     _id: "doc10",
     name: "Dr. John Smart",
     image: doc10,
+    speciality: "Pediatricians",
+    degree: "MBBS",
+    experience: "4 years",
+    fees: 50,
+  },
+  {
+    _id: "doc11",
+    name: "Dr. John Smart",
+    image: doc11,
+    speciality: "General Physician",
+    degree: "MBBS",
+    experience: "4 years",
+    fees: 50,
+  },
+  {
+    _id: "doc12",
+    name: "Dr. John Smart",
+    image: doc12,
     speciality: "Pediatricians",
     degree: "MBBS",
     experience: "4 years",

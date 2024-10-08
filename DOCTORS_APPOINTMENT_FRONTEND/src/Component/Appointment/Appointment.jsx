@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { AppContext } from '../Context/AppContext';
 import Icon from "../../assets/verified_icon.png";
 import info from "../../assets/info_icon.png";
+import RelatedDoctors from '../Related Doctors/RelatedDoctors';
 
 const Appointment = () => {
   const { docId } = useParams();
@@ -117,14 +118,19 @@ useEffect(()=>{
           ))}
         </div>
 
-        <div className='d-flex'>
+        <div className='d-flex w-100 flex-wrap gap-3 mt-4'>
           {docSlots.length && docSlots[slotIndex].map((item,index)=>(
-            <p key={index}>
+          <p onClick={()=>setSlotTime(item.time)} className={`px-2 py-2 rounded ${item.time === slotTime ? 'bg-success' : 'border border-success'}`}style={{ cursor: 'pointer' }} 
+          key={index}>
               {item.time.toLowerCase()}
             </p>
           ))}
         </div>
+        <button className='bg-success text-white  rounded border px-4 py-2'>Book an Apppointment</button>
       </div>
+      {/* related doctors */}
+      <RelatedDoctors docId={docId} speciality={docInfo.speciality}/>
+
     </div>
   );
 };

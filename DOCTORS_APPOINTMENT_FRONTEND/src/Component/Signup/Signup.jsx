@@ -43,35 +43,36 @@ const Signup = () => {
     },
     onSubmit: (values) => {
       const existingUsers = JSON.parse(localStorage.getItem("userData")) || [];
-
       existingUsers.push(values);
-
       localStorage.setItem('userData', JSON.stringify(existingUsers));
-      
+  
       console.log(values);
-
-      // navigate('/signIn');
-
-      axios.post(url,values)
-      .then((result)=>{
-        console.log(result);
-        swal({
-          title: "Success",
-          text:"User created successfully",
-          icon:"success"
+  
+      // Make the API request to sign up the user
+      axios.post(url, values)
+        .then((result) => {
+          console.log(result);
+          swal({
+            title: "Success",
+            text: "User created successfully",
+            icon: "success"
+          });
+          // Only navigate to the sign-in page if the sign-up is successful
+          navigate('/signIn');
         })
-      })
-      .catch((err)=>{
-        console.log(err);
-        swal({
-          title: "Error",
-          text:"User not Registered",
-           icon:"error"
-        })
-      })
+        .catch((err) => {
+          console.log(err);
+          swal({
+            title: "Error",
+            text: "User not Registered",
+            icon: "error"
+          });
+          // Do not navigate to the sign-in page on error
+        });
     },
     validationSchema
   });
+  
 
   return (
     <div className="signup-container">
