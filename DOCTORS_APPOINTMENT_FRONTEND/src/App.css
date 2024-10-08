@@ -172,12 +172,14 @@ body{
   width: 100%; 
   max-width: 250px; 
 }
-
-/* .doctor-image {
-  width: 80%; 
-  max-width: 150px; 
-  height: auto;
-} */
+.custom-hover-bg {
+  /* background-color: rgb(82, 80, 80);  */
+  transition: background-color 0.3s; 
+}
+.custom-hover-bg:hover {
+  background-color: teal; 
+  color: white; 
+}
 .icon {
   width: 20px; 
   height: auto; 

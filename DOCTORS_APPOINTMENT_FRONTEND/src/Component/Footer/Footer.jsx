@@ -17,7 +17,7 @@ const Footer = () => {
         {/* Center Section */}
         <div className="col-lg-4 col-md-6 mb-4 px-5">
           <h5 style={{ color: "#0e4747" }}>Company </h5>
-          <ul className="list-unstyled " >
+          <ul className="list-unstyled " style={{cursor:"pointer"}} >
             <li>Home</li>
             <li>About</li>
             <li>Contact Us</li>
@@ -28,7 +28,7 @@ const Footer = () => {
         {/* Right Section */}
         <div className="col-lg-4 col-md-6 mb-4 px-5">
           <h5 style={{ color: "#0e4747" }}>Get in Touch</h5>
-          <ul className="list-unstyled">
+          <ul className="list-unstyled"style={{cursor:"pointer"}}>
             <li>+234-355-173-99</li>
             <li>trinitycare@gmail.com</li>
           </ul>

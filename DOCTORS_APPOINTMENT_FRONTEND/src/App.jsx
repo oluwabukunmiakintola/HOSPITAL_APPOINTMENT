@@ -19,9 +19,18 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path='*' element={<NotFound/>}/>
-        <Route path='/'element={<Layout/>}>
-          <Route path='' element={<HomePage />} />
+        {/* User Layout with SignIn and Signup */}
+        <Route path="/user" element={<UserLayout />}>
+          <Route index element={<Navigate to="/user/signIn" />} />
+          <Route path="signIn" element={<SignIn />} />
+          <Route path="signup" element={<Signup />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="*" element={<Navigate to="/user/signIn" />} />
+        </Route>
+
+        {/* Main Layout */}
+        <Route path='/' element={<Layout />}>
+          <Route index element={<HomePage />} />
           <Route path="doctors" element={<Doctors />} />
           <Route path="doctors/:speciality" element={<Doctors />} />
           <Route path="about" element={<About />} />
@@ -31,16 +40,9 @@ function App() {
           <Route path="appointment/:docId" element={<Appointment />} />
         </Route>
 
-        {/* User Layout with SignIn and Signup */}
-        <Route path="/" element={<UserLayout />}>
-          <Route path='' element={<Navigate to="/signIn" />} />
-          <Route path="signIn" element={<SignIn />} />
-          <Route path="signup" element={<Signup />} />
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="*" element={<Navigate to="/signIn" />} /> {/* Catch-all for undefined routes */}
-        </Route>
+        {/* Catch-all for undefined routes */}
+        <Route path='*' element={<NotFound />} />
       </Routes>
-      
     </>
   );
 }

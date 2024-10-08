@@ -1,36 +1,49 @@
-import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { AppContext } from "../Context/AppContext";
+import React, { useContext, useEffect, useState } from 'react'
+import { AppContext } from '../Context/AppContext'
+import { useNavigate } from 'react-router-dom'
 
-const TopDoctors = () => {
-  const navigate = useNavigate();
-  const { doctors } = useContext(AppContext);
+const RelatedDoctors = ({speciality,docId}) => {
+
+const {doctors} = useContext(AppContext)
+const navigate = useNavigate()
+
+const [relDoc,setRelDocs] = useState([])
+
+useEffect(() => {
+    if (doctors.length > 0 && speciality) {
+        const doctorsData = doctors.filter((doc) =>
+            doc.speciality.toLowerCase() === speciality.toLowerCase() && doc._id !== docId
+          );
+          
+        console.log('Filtered Doctors:', doctorsData); 
+        setRelDocs(doctorsData);
+    }
+}, [doctors, speciality, docId]);
+
 
   return (
-    <div className="container">
-      <h2 className="text-center mt-5">Top Doctors to Book</h2>
-      <p className="text-center">
-        Simply browse through our extensive list of trusted doctors.
-      </p>
-
+    <>
+       <div className="container">
+      <h2 className="text-center mt-5">Related Doctors</h2>
       <div className="row">
-        {doctors.slice(0,12).map((item, index) => (
+        {relDoc.slice(0,5).map((item, index) => (
           <div
-            onClick={()=>{
+            onClick={() => {
+              console.log('Navigating to:', `/appointment/${item._id}`);
               navigate(`/appointment/${item._id}`);scrollTo(0,0)  
             }}
             className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4"
             key={index}
-          >
+          >          
             <div
               className="Topdoctors border border-success rounded"
               style={{ overflow: "hidden", cursor: "pointer" }}
             >
-              <div style={{ height: '350px' }}>
+              <div className="position-relative" style={{ height: '350px' }}>
                 <img
-                  className="w-100 h-100 object-fit-cover"
+                  className="img-fluid w-100 h-100 object-fit-cover"
                   src={item.image}
-                  // alt={item.name}
+                  alt={item.name}
                   style={{background:"#eaefff"}}
                 />
               </div>
@@ -62,7 +75,10 @@ const TopDoctors = () => {
         </button>
       </div>
     </div>
-  );
-};
+    
+    
+    </>
+  )
+}
 
-export default TopDoctors;
+export default RelatedDoctors

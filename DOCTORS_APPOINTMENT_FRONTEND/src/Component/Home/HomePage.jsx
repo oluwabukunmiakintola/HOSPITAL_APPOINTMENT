@@ -1,5 +1,5 @@
 import React from 'react';
-import image from '../../assets/docheader.png';
+import image from '../../assets/GroupDoc.png';
 import SpecialityMenu from '../Speciality/SpecialityMenu';
 import TopDoctors from '../TopDoctors/TopDoctors';
 import BookAppointment from '../Book Appointment/BookAppointment';
@@ -9,6 +9,7 @@ const HomePage = () => {
     <>
       <div className='container-fluid d-flex flex-column flex-lg-row align-items-center'>
         <div className='text-section d-flex flex-column col-lg-6 col-12 p-3'>
+
           <div className='Homepagetext'>
             <p className=' fw-bold' style={{ color: "#084949" }}>
               Book Appointment <br /> With Trusted Doctors
@@ -25,7 +26,8 @@ const HomePage = () => {
             </button>
           </a>
         </div>
-        <div className='image-section col-lg-6 col-12 p-3 overflow-hidden'>
+
+        <div className='image-section col-lg-6 col-12 p-4 overflow-hidden'>
           <img src={image} className="img-fluid landingImg" alt="Background" />
         </div>
       </div>
