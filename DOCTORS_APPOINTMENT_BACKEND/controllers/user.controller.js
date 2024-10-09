@@ -54,33 +54,30 @@ const signUpUser = async (req, res) => {
         //generate a verification token
         const verificationToken = Math.floor(10000000 + Math.random() * 90000000).toString()
 
-        // Create a new user document 
+
         const user = new userModel({
             email,
             password: hashedPassword,
             firstName,
             lastName,
             verificationToken,
-            verificationToken: generateVerificationToken(userModel._id), // Generate a JSON web Token
-            verificationTokenExpiresAt: Date.now() + 10 * 60 * 1000, //Set token expiring time
-            isEmailVerified: false, //Set email verification to false
+            verificationToken: generateVerificationToken(userModel._id),
+            verificationTokenExpiresAt: Date.now() + 10 * 60 * 1000,
+            isEmailVerified: false,
         })
 
-        // Save user document
         await user.save()
 
-        // Send a verification to the user but not yet working 
-        await sendVerificationEmail(user)
+        await sendVerificationEmail(userModel)
 
-        // Genetate a JSON web Token and Set cookies
+        //jwt 
         generateTokenAndSetCookies(res, user._id)
-        //Return a success response
         res.status(201).json({
             success: true,
             message: "User created successfully",
             user: {
                 ...userModel._doc,
-                password: undefined // Remove password not to be displayed 
+                password: undefined
             }
         })
 
@@ -90,25 +87,22 @@ const signUpUser = async (req, res) => {
     }
 }
 
-// Verify user email not yet working 
 const verifiyEmail = async (req, res) => {
-    //Find user Id and Token from MongoDb
     const { token, userId } = req.query
+
     try {
-        // Find user by Id
         const user = await userModel.findById(userId)
         if (!user) {
             return res.status(400).json({ message: "User not Found" })
         }
-        //verifiy Token
+
         const isValidToken = jwt.verify(token, process.env.VERIFICATION_SECRET)
         if (!isValidToken) {
             return res.status(400).json({ message: "Invalid Token" })
         }
-        // If user token is coreect 
         user.isEmailVerified = true
         await user.save()
-        //Return Response
+
         res.json({ message: "Email verified successfully" })
     }
     catch (err) {
@@ -117,7 +111,6 @@ const verifiyEmail = async (req, res) => {
     }
 }
 
-//Log in user
 const logInUser = async (req, res) => {
     const { email, password } = req.body
 
