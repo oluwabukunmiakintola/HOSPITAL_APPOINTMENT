@@ -21,7 +21,7 @@ const generateVerificationToken = (userId) => {
 }
 
 // Function for sending a verification email to  the user
-const sendVerificationEmail = async (userModel) => {
+const sendVerificationEmail = async (user) => {
     const mailOptions = {
         from: "oluwabukunmiakintola@gmail.com",//From email address
         to: userModel.email,//To email address of the user
@@ -68,7 +68,7 @@ const signUpUser = async (req, res) => {
 
         await user.save()
 
-        await sendVerificationEmail(userModel)
+        await sendVerificationEmail(user)
 
         //jwt 
         generateTokenAndSetCookies(res, user._id)
