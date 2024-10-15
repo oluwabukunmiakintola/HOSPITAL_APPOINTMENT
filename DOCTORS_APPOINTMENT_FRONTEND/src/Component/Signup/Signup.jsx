@@ -58,7 +58,7 @@ const Signup = () => {
             icon: "success"
           });
           // Only navigate to the sign-in page if the sign-up is successful
-          navigate('/signIn');
+          navigate('/user/signIn');
         })
         .catch((err) => {
           console.log(err);

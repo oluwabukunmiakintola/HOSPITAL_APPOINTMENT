@@ -30,7 +30,7 @@ const TopDoctors = () => {
                 <img
                   className="w-100 h-100 object-fit-cover"
                   src={item.image}
-                  // alt={item.name}
+                  alt={item.name}
                   style={{background:"#eaefff"}}
                 />
               </div>

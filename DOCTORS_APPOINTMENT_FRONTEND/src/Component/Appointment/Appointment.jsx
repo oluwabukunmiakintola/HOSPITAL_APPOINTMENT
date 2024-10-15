@@ -108,7 +108,7 @@ useEffect(()=>{
           {docSlots.length > 0 && docSlots.map((item, index) => (
             <div
               onClick={() => setSlotIndex(index)}
-              className={`text-center px-4 rounded cursor-pointer ${slotIndex === index ? 'bg-success text-white' : 'border success'}`}
+              className={`text-center px-3 py-2 rounded-pill cursor-pointer ${slotIndex === index ? 'bg-success text-white' : 'border success'}`}
               key={index}
               style={{ cursor: 'pointer' }} 
             >
@@ -120,13 +120,13 @@ useEffect(()=>{
 
         <div className='d-flex w-100 flex-wrap gap-3 mt-4'>
           {docSlots.length && docSlots[slotIndex].map((item,index)=>(
-          <p onClick={()=>setSlotTime(item.time)} className={`px-2 py-2 rounded ${item.time === slotTime ? 'bg-success' : 'border border-success'}`}style={{ cursor: 'pointer' }} 
+          <p onClick={()=>setSlotTime(item.time)} className={`px-2 py-2 rounded-pill ${item.time === slotTime ? 'bg-success' : 'border border-success'}`}style={{ cursor: 'pointer' }} 
           key={index}>
               {item.time.toLowerCase()}
             </p>
           ))}
         </div>
-        <button className='bg-success text-white  rounded border px-4 py-2'>Book an Apppointment</button>
+        <button className='bg-success text-white  rounded-pill border px-4 py-2'>Book an Apppointment</button>
       </div>
       {/* related doctors */}
       <RelatedDoctors docId={docId} speciality={docInfo.speciality}/>
