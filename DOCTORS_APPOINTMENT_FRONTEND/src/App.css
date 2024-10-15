@@ -125,6 +125,10 @@ body{
   display: flex;
   overflow: hidden;
 }
+.dropdown-menu {
+  width: auto; /* Allow the dropdown to adjust based on content */
+  max-width: 200px; /* Set a maximum width */
+}
 .landingImg {
   max-width: 100%;
   height: auto; 
@@ -161,8 +165,6 @@ body{
 }
 .Topdoctors{
   transition: transform 0.3s ease
-  
-  
 }
 .Topdoctors:hover{
   transform: translateY(-5px); 
@@ -402,10 +404,10 @@ body{
 }
 
 @media (max-width: 992px) {
-  *{
+  /* *{
     overflow-x: hidden;
-    /* border: 2px solid red; */
-  }
+    border: 2px solid red;
+  } */
   .navbar-nav {
     flex-direction: column; 
     width: 100%; 
@@ -414,22 +416,22 @@ body{
     text-align: center; 
     width: 100%; 
   }
-  .logo-container {
+  /* .logo-container {
     max-width: 150px; 
-  }
-  .navbar-brand h1, .navbar-brand h2 {
+  } */
+  /* .navbar-brand h1, .navbar-brand h2 {
     font-size: 1.2rem;  
-  }
+  } */
   .trinity-knot:before,
   .trinity-knot:after {
     display: none;
   }
-  .logo-text h1{
+  /* .logo-text h1{
     font-size: 0.6rem;
-  }
-.logo-text h2{
+  } */
+/* .logo-text h2{
   font-size: 0.5rem;
-}
+} */
 .landingBtn {
   width: 50%;
   padding: 8px;
@@ -446,10 +448,10 @@ body{
 }
 }
 @media (max-width: 576px) {
-  *{
+  /* *{
     overflow-x: hidden;
-    /* border: 2px solid red; */
-  }
+    border: 2px solid red;
+  } */
   .navbar-nav {
     font-size: 0.9rem; 
   }
@@ -463,7 +465,21 @@ body{
 .HomePageText {
   font-size: 0.9rem; 
 }
+.dropdown-menu {
+  position: absolute; 
+  left: 0; 
+  right: 0; 
 }
+}
+@media (max-width: 768px) { 
+  .nav-link::before {
+    transition: none; 
+  }
 
+  .nav-link:hover::before {
+    width: 100%;
+    visibility: hidden;
+  }
+}
 
 

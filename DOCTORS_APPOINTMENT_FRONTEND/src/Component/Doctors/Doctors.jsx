@@ -5,6 +5,7 @@ import { AppContext } from "../Context/AppContext";
 const Doctors = () => {
   const { speciality } = useParams();
   const [filterDoc, setFilterDoc] = useState([]);
+  const [showFilter, setShowFilter] = useState(false);
   const navigate = useNavigate();
   const { doctors } = useContext(AppContext);
 
@@ -20,14 +21,30 @@ const Doctors = () => {
     applyFilter();
   }, [doctors, speciality]);
 
+  const handleSpecialtyClick = (spec) => {
+    if (speciality === spec) {
+      navigate("/doctors");
+    } else {
+      navigate(`/doctors/${spec}`);
+    }
+  };
+
   return (
     <div>
       <p className="text-center mt-5 py-4">
         Browse through the doctors' specialties.
       </p>
       <div className="container d-flex flex-column flex-md-row gap-4">
+        {/* Show filter button only on mobile */}
+        <button
+          className={`py-1 px-3 border rounded-pill ${showFilter ? "bg-success text-white" : ""} d-md-none`}
+          onClick={() => setShowFilter((prev) => !prev)}
+        >
+          Filters
+        </button>
+        {/* Filter options - visible only on mobile */}
         <div
-          className="d-flex flex-column mt-3 px-3"
+          className={`flex-column mt-3 px-3 ${showFilter ? 'd-flex' : 'd-none'} d-md-none`}
           style={{ cursor: "pointer" }}
         >
           {[
@@ -40,25 +57,49 @@ const Doctors = () => {
           ].map((spec) => (
             <p
               key={spec}
-              onClick={() =>
-                speciality === spec
-                  ? navigate("/doctors")
-                  : navigate(`/doctors/${spec}`)
-              }
+              onClick={() => handleSpecialtyClick(spec)}
               className="mb-3 gap-1 text-center border border-success rounded py-2 w-100"
               style={{ width: "200px" }} 
             >
               {spec}
             </p>
           ))}
+          <p
+            onClick={() => navigate("/doctors")}
+            className="mb-3 text-center border border-danger rounded py-2 w-100 text-danger"
+            style={{ width: "200px", cursor: "pointer" }}
+          >
+            Clear Filters
+          </p>
+        </div>  
+        {/* Specialty options visible on all screens */}
+        <div className="d-none d-md-flex flex-column gap-3">
+          {[
+            "General Physician",
+            "Gynecologist",
+            "Dermatologist",
+            "Pediatricians",
+            "Neurologist",
+            "Gastroenterologist",
+          ].map((spec) => (
+            <p
+              key={spec}
+              onClick={() => handleSpecialtyClick(spec)}
+              className={`text-center border border-success rounded py-2 ${speciality === spec ? 'bg-success text-white' : ''}`}
+              style={{ cursor: "pointer", width: "200px" }}
+            >
+              {spec}
+            </p>
+          ))}
         </div>
+        {/* Doctors List */}
         <div className="row">
           {filterDoc.map((item) => (
             <div
-              onClick={()=>{
+              onClick={() => {
                 navigate(`/appointment/${item._id}`);  
               }}
-              className="col-12 col-md-12 col-lg-6 mb-4"
+              className="col-12 col-md-6 mb-4"
               key={item._id}
             >
               <div

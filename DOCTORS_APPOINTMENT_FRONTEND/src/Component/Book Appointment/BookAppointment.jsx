@@ -21,7 +21,7 @@ const BookAppointment = () => {
               </p>
             </div>
             <div className="mt-3">
-              <button onClick={()=>{navigate("signIn"); scrollTo(0,0)}} className="landingBtn text-white">Create Account</button>
+              <button onClick={()=>{navigate("/user/signIn"); scrollTo(0,0)}} className="landingBtn text-white">Create Account</button>
             </div>
           </div>
           <div className="col-lg-4 col-12 p-3 mb-5  d-none d-lg-block overflow-hidden">
