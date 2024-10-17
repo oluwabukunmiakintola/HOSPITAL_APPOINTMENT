@@ -4,6 +4,8 @@ const adminSchema = mongoose.Schema({
     email:{type: String, required: true, unique: true},
     password:{type: String, required: true},
     dateAddded:{type: Date, default: Date.now},
+    verificationToken: String,
+    verificationTokenExpiresAt: Date,
 })
 
 const adminModel = mongoose.model("admin_collection", adminSchema)
