@@ -7,36 +7,23 @@ const dotenv = require("dotenv")
 //Load data from env
 dotenv.config()
 
-const generateVerificationToken = (adminId) =>{
-    if (!process.env.VERIFICATION_SECRET){
-        throw new Error("Verification secret is not set")
+
+const loginAdmin =(req, res)=>{
+    const {email, password} = req.body
+
+    // Check if email and password are provided
+    if (!email || !password) {
+        return res.status(400).json({ message: "Email and password are required" })
     }
-    return jwt.sign({adminId}, process.env.VERIFICATION_SECRET)
-}
 
-const signUpAdmin = async ()=>{
-    //Extract admin data from request body
-    const {email, password}  = req.body 
-    console.log(req.body);
+    //Check if the provided email and password are correct
+    if(email=== process.env.ADMIN_USERMAIL && password=== process.env.ADMIN_PASSWORD){
+        const token = jwt.sign({ email: email }, process.env.VERIFICATION_SECRET, { expiresIn:"1h"})
 
-    try{
-        if (!email || !paasword){
-            throw new Error("All fields required")
-        }
-        const adminALreadyExist = await adminModel.findOne({email})
-        if (adminALreadyExist){
-            return res.status(400).json({success:false, message:"user already Exit"})
-        }
-        const hashedPassword = await bcrypt.hash(password, 10)
-        const admin = new adminModel({
-            email, 
-            password:hashedPassword,
-            verificationToken: generateVerificationToken(userModel._id),
-            verificationTokenExpiresAt: Date.now() + 10 * 60 * 1000,
-        })
+        return res.status(200).json({success:true, token})
     }
-    
-    catch{
-
+    else{
+        // invalid detail if wrong 
+        return res.status(401).json({message:"Invalid email or password"})
     }
 }
