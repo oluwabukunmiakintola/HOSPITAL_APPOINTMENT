@@ -2,6 +2,7 @@ const adminModel = require("../model/admin.model")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const dotenv = require("dotenv")
+const { log } = require("console")
 
 
 //Load data from env
@@ -10,7 +11,10 @@ dotenv.config()
 
 const loginAdmin =(req, res)=>{
     const {email, password} = req.body
-
+    console.log("Email:",email);
+    console.log("password:",password);
+    
+    
     // Check if email and password are provided
     if (!email || !password) {
         return res.status(400).json({ message: "Email and password are required" })
