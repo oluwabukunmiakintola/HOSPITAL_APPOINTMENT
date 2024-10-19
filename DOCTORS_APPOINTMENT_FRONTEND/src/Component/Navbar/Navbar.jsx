@@ -12,11 +12,12 @@ const Navbar = () => {
   const handleDropdownToggle = () => {
     setDropdownOpen(!dropdownOpen);
   };
+const handleLogout = () => {
+  setToken(false);
+  setDropdownOpen(false);
+  navigate("/"); 
+};
 
-  const handleLogout = () => {
-    setToken(false);
-    setDropdownOpen(false); 
-  };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
@@ -79,7 +80,7 @@ const Navbar = () => {
           ) : (
             <button
               onClick={() => navigate("/user/signUp")}
-              className="btn btn-primary mt-2 fw-bold"
+              className="btn btn-success mt-2 fw-bold"
             >
               Create Account
             </button>

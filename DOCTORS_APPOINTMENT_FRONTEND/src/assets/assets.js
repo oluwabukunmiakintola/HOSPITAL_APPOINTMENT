@@ -65,6 +65,7 @@ export const doctors = [
     speciality: "Dermatologist",
     degree: "MBBS",
     experience: "4 years",
+    about:"Dr. Richard has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Richard has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
     fees: 150,
   },
   {
@@ -74,6 +75,7 @@ export const doctors = [
     speciality: "Neutrologist",
     degree: "MBBS",
     experience: "4 years",
+    about:"Dr. Richard has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Richard has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
     fees: 100,
   },
 
@@ -84,6 +86,7 @@ export const doctors = [
     speciality: "Gynecologist",
     degree: "MBBS",
     experience: "4 years",
+    about:"Dr. Richard has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Richard has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
     fees: 50,
   },
   {
@@ -93,6 +96,8 @@ export const doctors = [
     speciality: "Dermatologist",
     degree: "MBBS",
     experience: "4 years",
+    about:"Dr. Richard has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Richard has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
+
     fees: 50,
   },
   {
@@ -102,6 +107,7 @@ export const doctors = [
     speciality: "Gynecologist",
     degree: "MBBS",
     experience: "4 years",
+    about:"Dr. Richard has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Richard has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
     fees: 50,
   },
   {
@@ -111,6 +117,7 @@ export const doctors = [
     speciality: "General Physician",
     degree: "MBBS",
     experience: "4 years",
+    about:"Dr. Richard has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Richard has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
     fees: 50,
   },
   {
@@ -120,6 +127,7 @@ export const doctors = [
     speciality: "Pediatricians",
     degree: "MBBS",
     experience: "4 years",
+    about:"Dr. Richard has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Richard has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
     fees: 50,
   },
 
@@ -130,6 +138,7 @@ export const doctors = [
     speciality: "General Physician",
     degree: "MBBS",
     experience: "4 years",
+    about:"Dr. Richard has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Richard has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
     fees: 50,
   },
 
@@ -140,6 +149,7 @@ export const doctors = [
     speciality: "Pediatricians",
     degree: "MBBS",
     experience: "4 years",
+    about:"Dr. Richard has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Richard has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
     fees: 50,
   },
   {
@@ -149,6 +159,7 @@ export const doctors = [
     speciality: "General Physician",
     degree: "MBBS",
     experience: "4 years",
+    about:"Dr. Richard has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Richard has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
     fees: 50,
   },
   {
@@ -158,6 +169,7 @@ export const doctors = [
     speciality: "Pediatricians",
     degree: "MBBS",
     experience: "4 years",
+    about:"Dr. Richard has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies. Dr. Richard has a strong commitment to delivering comprehensive medical care, focusing on preventive medicine, early diagnosis, and effective treatment strategies.",
     fees: 50,
   },
 ];

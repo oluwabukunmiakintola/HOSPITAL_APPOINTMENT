@@ -57,7 +57,6 @@ const Signup = () => {
             text: "User created successfully",
             icon: "success"
           });
-          // Only navigate to the sign-in page if the sign-up is successful
           navigate('/user/signIn');
         })
         .catch((err) => {
@@ -67,12 +66,11 @@ const Signup = () => {
             text: "User not Registered",
             icon: "error"
           });
-          // Do not navigate to the sign-in page on error
         });
     },
     validationSchema
   });
-  
+    
 
   return (
     <div className="signup-container">
@@ -85,8 +83,6 @@ const Signup = () => {
             </div>
           </div>   
         <h4 className='mt-2' style={{color:" #008080"}}>Create an account</h4>
-        {/* <p className='user'>Please enter your details to book an appointment</p> */}
-
         <form onSubmit={formik.handleSubmit}>
           <div className="form-group">
             <input
