@@ -5,6 +5,7 @@ const PORT = 5000
 const mongoose = require('mongoose')
 const cors = require("cors")
 const userRouter = require("./routes/user.route.js")
+const adminRouter = require("./routes/admin.route.js")
 
 // middleware
 require("dotenv").config()
@@ -12,6 +13,7 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 app.use("/user",userRouter)
+app.use("/admin",adminRouter)
 const URI = process.env.MONGO_DB_URI
 mongoose.connect(URI)
 .then(()=> {

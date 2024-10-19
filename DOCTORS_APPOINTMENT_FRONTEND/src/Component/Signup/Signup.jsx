@@ -146,7 +146,7 @@ const Signup = () => {
           </div>
 
           <button type="submit" className='mt-3 ' >Sign Up</button>
-          <p className='mt-3' style={{color:" #008080"}}>Already have an account? <Link to="/signIn" className='SignInLink fw-bold'>Sign in</Link></p>
+          <p className='mt-3' style={{color:" #008080"}}>Already have an account? <Link to="/user/signIn" className='SignInLink fw-bold'>Sign in</Link></p>
         </form>
       </div>
     </div>
