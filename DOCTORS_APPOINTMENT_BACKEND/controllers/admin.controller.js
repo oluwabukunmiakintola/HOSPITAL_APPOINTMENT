@@ -9,7 +9,7 @@ const { log } = require("console")
 dotenv.config()
 
 
-const loginAdmin = async(req, res)=>{
+const signInAdmin = async(req, res)=>{
     const {email, password} = req.body
     console.log("Email:",email);
     console.log("password:",password);
@@ -36,4 +36,4 @@ const loginAdmin = async(req, res)=>{
 }
 
 
-module.exports = loginAdmin
+module.exports =signInAdmin
