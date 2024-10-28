@@ -1,165 +1,187 @@
-import React, { useContext, useState } from 'react';
-import { AppContext } from '../Context/AppContext';
-import { useNavigate } from 'react-router-dom'; 
+import React, { useContext, useState } from "react";
+import { AppContext } from "../Context/AppContext";
+import { ToastContainer, toast } from "react-toastify";
 
 const MyAppointment = () => {
-  const { doctors } = useContext(AppContext);
-  const [appointments, setAppointments] = useState(doctors.slice(0, 3)); 
-  const [selectedAppointment, setSelectedAppointment] = useState(null);
-  const [newDate, setNewDate] = useState('');
-  const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [appointmentToCancel, setAppointmentToCancel] = useState(null);
-  const [rescheduleMessage, setRescheduleMessage] = useState(''); 
+  const {
+    appointments,
+    cancelAppointment,
+    payForAppointment,
+    rescheduleAppointment,
+  } = useContext(AppContext);
 
-  const navigate = useNavigate(); 
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+  const [isRescheduleModalOpen, setIsRescheduleModalOpen] = useState(false);
+  const [selectedAppointmentId, setSelectedAppointmentId] = useState(null);
+  const [newDateTime, setNewDateTime] = useState("");
 
-  const handlePay = (appointmentId) => {
-    console.log(`Payment initiated for appointment ${appointmentId}`);
+  const handleCancelRequest = (id) => {
+    setSelectedAppointmentId(id);
+    setIsCancelModalOpen(true);
   };
 
-  const handleCancel = (appointmentId) => {
-    setShowConfirmModal(true);
-    setAppointmentToCancel(appointmentId);
+  const handleCancel = () => {
+    if (selectedAppointmentId) {
+      cancelAppointment(selectedAppointmentId);
+      toast.success("Appointment canceled successfully.");
+      setIsCancelModalOpen(false);
+    }
   };
 
-  const confirmCancel = () => {
-    setAppointments(prevAppointments => {
-      const updatedAppointments = prevAppointments.filter(app => app.id !== appointmentToCancel);
-      navigate('/'); 
-      return updatedAppointments;
-    });
-    console.log(`Appointment ${appointmentToCancel} cancelled`);
-    setShowConfirmModal(false);
-    setAppointmentToCancel(null);
+  const handlePay = (id) => {
+    const success = payForAppointment(id);
+    if (success) {
+      toast.success("Payment successful.");
+    } else {
+      toast.error("Payment failed. Please try again.");
+    }
   };
 
-  const handleReschedule = (appointment) => {
-    setSelectedAppointment(appointment);
-    setNewDate(''); 
+  const handleRescheduleRequest = (id) => {
+    setSelectedAppointmentId(id);
+    setIsRescheduleModalOpen(true);
   };
 
-  const confirmReschedule = () => {
-    setAppointments(prevAppointments =>
-      prevAppointments.map(app => 
-        app.id === selectedAppointment.id 
-          ? { ...app, dateTime: newDate } 
-          : app
-      )
-    );
-    setRescheduleMessage(`Appointment with ${selectedAppointment.name} has been rescheduled to ${newDate}`);
-    // console.log(`Appointment ${selectedAppointment.id} rescheduled to ${newDate}`);
-    setSelectedAppointment(null);
-    setNewDate('');
+  const handleReschedule = () => {
+    if (selectedAppointmentId && newDateTime) {
+      rescheduleAppointment(selectedAppointmentId, { dateTime: newDateTime });
+      toast.success("Appointment rescheduled successfully.");
+      setIsRescheduleModalOpen(false);
+      setNewDateTime("");
+    } else {
+      toast.error("Please provide a new date and time.");
+    }
   };
 
   return (
-    <div className='py-5 container'>
-      <p className='mt-5 fs-4 border-bottom pb-3'>My Appointments</p>
-
-      {/* Display Reschedule Message */}
-      {rescheduleMessage && <div className="alert alert-success">{rescheduleMessage}</div>}
-
+    <div className="py-5 container">
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar
+        closeOnClick
+        draggable
+        pauseOnHover
+      />
+      <p className="mt-5 fs-4 border-bottom pb-3">My Appointments</p>
       <div className="row">
-        {appointments.map((item) => (
-          <div key={item.id} className="col-12 mb-4">
-            <div className="border p-4">
-              <div className="d-flex align-items-start">
-                <img 
-                  src={item.image} 
-                  alt={item.name} 
-                  className='img-fluid me-3'  
-                  style={{ maxWidth: '130px', backgroundColor: "#c3d8d8", borderRadius: "5px" }} 
+        {appointments.length > 0 ? (
+          appointments.map((item) => (
+            <div key={item.id} className="col-12 mb-4">
+              <div className="border p-4 d-flex flex-column flex-md-row align-items-start">
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="img-fluid me-3 mb-3 mb-md-0"
+                  style={{
+                    maxWidth: "130px",
+                    backgroundColor: "#c3d8d8",
+                    borderRadius: "5px",
+                  }}
                 />
-                <div className='mt-2'>
+                <div className="mt-2 flex-grow-1">
                   <h5 className="mb-1">{item.name}</h5>
                   <p className="mb-1">{item.speciality}</p>
-                  <p className="mb-1">Address:</p>
-                  <p className="mb-1">{item.address?.line1 || '17th Cross, Richmond'}</p>
-                  <p className="mb-1">{item.address?.line2 || 'Circle, Ring Road, London'}</p>
                   <p className="mb-0">
-                    <span>Date & Time:</span> {item.dateTime || '12, October, 2024 | 10:00 PM'}
+                    <span>Date & Time:</span> {item.dateTime}
                   </p>
                 </div>
-              </div>
-              <div className="d-flex justify-content-end mt-3">
-                <button 
-                  className="btn btn-success me-2" 
-                  onClick={() => handlePay(item.id)}
-                >
-                  Pay Online
-                </button>
-                <button 
-                  className="btn btn-danger me-2" 
-                  onClick={() => handleCancel(item.id)}
-                >
-                  Cancel Appointment
-                </button>
-                <button 
-                  className="btn btn-warning" 
-                  onClick={() => handleReschedule(item)}
-                >
-                  Reschedule
-                </button>
+                <div className="d-flex flex-column align-items-end mt-3">
+                  <button
+                    className="btn btn-success mb-2"
+                    onClick={() => handlePay(item.id)}
+                  >
+                    Pay Online
+                  </button>
+                  <button
+                    className="btn btn-danger mb-2"
+                    onClick={() => handleCancelRequest(item.id)}
+                  >
+                    Cancel Appointment
+                  </button>
+                  <button
+                    className="btn btn-warning"
+                    onClick={() => handleRescheduleRequest(item.id)}
+                  >
+                    Reschedule
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <p>No appointments found.</p>
+        )}
       </div>
 
       {/* Confirmation Modal for Cancellation */}
-      {showConfirmModal && (
-        <div className="modal show" style={{ display: 'block' }}>
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Confirm Cancellation</h5>
-                <button type="button" className="close" onClick={() => setShowConfirmModal(false)}>
-                  <span>&times;</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                <p>Are you sure you want to cancel this appointment?</p>
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={() => setShowConfirmModal(false)}>No</button>
-                <button type="button" className="btn btn-danger" onClick={confirmCancel}>Yes, Cancel</button>
-              </div>
+      {isCancelModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3>Are you sure you want to cancel this appointment?</h3>
+            <button className="btn btn-danger" onClick={handleCancel}>
+              Yes
+            </button>
+            <button
+              className="btn btn-secondary"
+              onClick={() => setIsCancelModalOpen(false)}
+            >
+              No
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Modal for Rescheduling */}
+      {isRescheduleModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h3>Reschedule Appointment</h3>
+            <input
+              type="datetime-local"
+              value={newDateTime}
+              onChange={(e) => setNewDateTime(e.target.value)}
+              required
+            />
+            <div className="mt-3">
+              <button className="btn btn-success" onClick={handleReschedule}>
+                Confirm Reschedule
+              </button>
+              <button
+                className="btn btn-secondary ms-2"
+                onClick={() => setIsRescheduleModalOpen(false)}
+              >
+                 Cancel
+              </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Reschedule Modal */}
-      {selectedAppointment && (
-        <div className="modal show" style={{ display: 'block' }}>
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Reschedule Appointment for {selectedAppointment.name}</h5>
-                <button type="button" className="close" onClick={() => setSelectedAppointment(null)}>
-                  <span>&times;</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                <label htmlFor="newDate" className="form-label">Select New Date & Time</label>
-                <input 
-                  type="datetime-local" 
-                  className="form-control" 
-                  id="newDate" 
-                  value={newDate} 
-                  onChange={(e) => setNewDate(e.target.value)} 
-                />
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={() => setSelectedAppointment(null)}>Close</button>
-                <button type="button" className="btn btn-primary" onClick={confirmReschedule}>Confirm Reschedule</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* Modal Styles */}
+      <style jsx>{`
+        .modal-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.5);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 1000;
+        }
+
+        .modal-content {
+          background: white;
+          padding: 20px;
+          border-radius: 5px;
+          text-align: center;
+        }
+      `}</style>
     </div>
   );
-}
+};
 
 export default MyAppointment;

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Tlogo from "../../assets/Tlogo.png";
+import Profile from "../../assets/MyProfile.jpg";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
-import profile from "../../assets/MyProfile.jpg";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -12,80 +13,32 @@ const Navbar = () => {
   const handleDropdownToggle = () => {
     setDropdownOpen(!dropdownOpen);
   };
-const handleLogout = () => {
-  setToken(false);
-  setDropdownOpen(false);
-  navigate("/"); 
-};
 
+  const handleLogout = () => {
+    setToken(false);
+    setDropdownOpen(false);
+    navigate("/");
+  };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-      <div className="container">
-        
-        <Link className="navbar-brand" to="#">
-          <div onClick={() => navigate("/")} className="trinity-knot img-fluid"></div>
-          <div className="logo-text">
-            <h1 className="mb-0 h5 h4 h3 h2">Trinity Care</h1>
-            <h2 className="mb-0 h6 h5 h4 h3">Hospital</h2>
-          </div>
-        </Link>
+      <div className="container-fluid">
         <div className="d-flex align-items-center">
-          {token ? (
-            <div className="dropdown position-relative">
-              <img
-                src={profile}
-                alt="Profile"
-                className="profile"
-                style={{ width: "40px", height: "40px", borderRadius: "50%" }}
-                onClick={handleDropdownToggle}
-              />
-              <span
-                onClick={handleDropdownToggle}
-                style={{ cursor: "pointer" }}
-              >
-                <FontAwesomeIcon icon={faCaretDown} />
-              </span>
-              <ul
-                className={`dropdown-menu dropdown-menu-end ${
-                  dropdownOpen ? "show" : ""
-                }`}
-                style={{ border: "none", position: "absolute", zIndex: 1000 }}
-              >
-                <li>
-                  <Link
-                    className="dropdown-item"
-                    to="/my-profile"
-                    onClick={() => setDropdownOpen(false)}
-                  >
-                    My Profile
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="dropdown-item"
-                    to="/my-appointment"
-                    onClick={() => setDropdownOpen(false)}
-                  >
-                    My Appointment
-                  </Link>
-                </li>
-                <li>
-                  <p onClick={handleLogout} className="dropdown-item">
-                    Logout
-                  </p>
-                </li>
-              </ul>
+          <img
+            src={Tlogo}
+            alt="Trinity Care Logo"
+            className="logo img-fluid"
+            style={{ width: '50px', cursor: "pointer" }} 
+            onClick={() => navigate('/')}
+          />
+          <Link className="navbar-brand ms-2" to="#">
+            <div className="logo-text">
+              <h1 className="mb-0">WinField</h1>
+              <h2 className="mb-0">Hospital</h2>
             </div>
-          ) : (
-            <button
-              onClick={() => navigate("/user/signUp")}
-              className="btn btn-success mt-2 fw-bold"
-            >
-              Create Account
-            </button>
-          )}
+          </Link>
         </div>
+
         <button
           className="navbar-toggler"
           type="button"
@@ -96,34 +49,68 @@ const handleLogout = () => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        
+
         <div className="collapse navbar-collapse" id="navbarNav">
-          <div className="mx-auto">
-            <ul className="navbar-nav">
-              <li className="nav-item mx-2">
-                <Link to="/" className="nav-link">
-                  Home
-                </Link>
-              </li>
-              <li className="nav-item mx-2">
-                <Link to="/about" className="nav-link">
-                  About Us
-                </Link>
-              </li>
-              <li className="nav-item mx-2">
-                <Link to="/doctors" className="nav-link">
-                  All Doctors
-                </Link>
-              </li>
-              <li className="nav-item mx-2">
-                <Link to="/contact" className="nav-link">
-                  Contacts
-                </Link>
-              </li>
-            </ul>
+          <ul className="navbar-nav mx-auto">
+            <li className="nav-item mx-5"> 
+              <Link to="/" className="nav-link">Home</Link>
+            </li>
+            <li className="nav-item mx-5"> 
+              <Link to="/about" className="nav-link">About Us</Link>
+            </li>
+            <li className="nav-item mx-5">
+              <Link to="/doctors" className="nav-link">All Doctors</Link>
+            </li>
+            <li className="nav-item mx-5"> 
+              <Link to="/contact" className="nav-link">Contacts</Link>
+            </li>
+          </ul>
+          <div className="ms-auto">
+          <button onClick={() => navigate("/user/signUp")} className=" mt-2 fw-bold rounded border px-3 py-2 text-white" style={{background:" #167474"}}>
+                Get Started
+              </button>
           </div>
+
+          {/* Uncomment the user dropdown section if needed */}
+          {/* <div className="d-flex align-items-center">
+            {token ? (
+              <div className="dropdown position-relative">
+                <img
+                  src={Profile}
+                  alt="Profile"
+                  className="profile"
+                  style={{ width: "40px", height: "40px", borderRadius: "50%", cursor: "pointer" }}
+                  onClick={handleDropdownToggle}
+                />
+                <span onClick={handleDropdownToggle} style={{ cursor: "pointer" }}>
+                  <FontAwesomeIcon icon={faCaretDown} />
+                </span>
+                <ul
+                  className={`dropdown-menu dropdown-menu-end ${dropdownOpen ? "show" : ""}`}
+                  style={{ border: "none", position: "absolute", zIndex: 1000 }}
+                >
+                  <li>
+                    <Link className="dropdown-item" to="/my-profile" onClick={() => setDropdownOpen(false)}>
+                      My Profile
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="dropdown-item" to="/my-appointment" onClick={() => setDropdownOpen(false)}>
+                      My Appointment
+                    </Link>
+                  </li>
+                  <li>
+                    <p onClick={handleLogout} className="dropdown-item">Logout</p>
+                  </li>
+                </ul>
+              </div>
+            ) : (
+              <button onClick={() => navigate("/user/signUp")} className="btn btn-success mt-2 fw-bold">
+                Create Account
+              </button>
+            )}
+          </div> */}
         </div>
-        
       </div>
     </nav>
   );

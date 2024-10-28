@@ -16,9 +16,9 @@ const TopDoctors = () => {
       <div className="row">
         {doctors.slice(0,12).map((item, index) => (
           <div
-            onClick={()=>{
-              navigate(`/appointment/${item._id}`);scrollTo(0,0)  
-            }}
+            // onClick={()=>{
+            //   navigate(`/appointment/${item._id}`);scrollTo(0,0)  
+            // }}
             className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4"
             key={index}
           >
@@ -26,7 +26,7 @@ const TopDoctors = () => {
               className="Topdoctors border border-success rounded"
               style={{ overflow: "hidden", cursor: "pointer" }}
             >
-              <div style={{ height: '350px' }}>
+              <div className="d-flex justify-content-center mx-auto" style={{ height: '350px' }}>
                 <img
                   className="w-100 h-100 object-fit-cover"
                   src={item.image}
@@ -44,6 +44,7 @@ const TopDoctors = () => {
                 </div>
                 <p className="fw-bold">{item.name}</p>
                 <p>{item.speciality}</p>
+                <button className="btn btn-success w-100" onClick={()=>{navigate('/user/signIn')}} >Book Now</button>
               </div>
             </div>
           </div>

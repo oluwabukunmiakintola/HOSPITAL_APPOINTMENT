@@ -1,137 +1,208 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { AppContext } from '../Context/AppContext';
+import React, { useContext, useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { AppContext } from "../Context/AppContext";
 import Icon from "../../assets/verified_icon.png";
 import info from "../../assets/info_icon.png";
-import RelatedDoctors from '../Related Doctors/RelatedDoctors';
+import RelatedDoctors from "../Related Doctors/RelatedDoctors";
+import Calendar from "react-calendar";
+import { ToastContainer, toast } from "react-toastify";
+import { ImAlarm } from "react-icons/im";
+import { BiSolidCalendar } from "react-icons/bi";
 
 const Appointment = () => {
   const { docId } = useParams();
-  const { doctors, currencySymbol } = useContext(AppContext);
-  const daysOfWeek=["SUN", "MON","TUE","WED","THUR","FRI","SAT"]
+  const { doctors, currencySymbol, addAppointment } = useContext(AppContext);
   const [docInfo, setDocInfo] = useState(null);
-  const [docSlots, setdocSlots]=useState([])
-  const [slotIndex, setSlotIndex]=useState(0)
-  const [slotTime, setSlotTime]=useState("")
+  const [docSlots, setDocSlots] = useState([]);
+  const [date, setDate] = useState(new Date());
+  const [booked, setBooked] = useState(false);
+  const [selectedSlot, setSelectedSlot] = useState(null);
+  const navigate = useNavigate();
 
-
-  const fetchDocInfo = async () => {
-    const docInfo = doctors.find(doc => doc._id === docId);
-    setDocInfo(docInfo);
-    // console.log(docInfo);
+  const fetchDocInfo = () => {
+    const doctor = doctors.find((doc) => doc._id === docId);
+    setDocInfo(doctor);
   };
 
-  const getAvailableSlots = async()=>{
-    setdocSlots([])
+  const getAvailableSlots = (selectedDate) => {
+    const slots = [];
+    let currentDate = new Date(selectedDate);
+    let endTime = new Date(currentDate);
+    endTime.setHours(21, 0, 0, 0);
 
-    let today =new Date()
+    currentDate.setHours(10, 0, 0, 0);
 
-    for(let i =0 ; i < 7; i++){
-      // getting date with index
-      let currentDate = new Date(today)
-      currentDate.setDate(today.getDate()+i)
-      
-      // setting end time of the date with index
-      let endTime =new Date()
-      endTime.setDate(today.getDate()+i)
-      endTime.setHours(21,0,0,0)
-
-      // settings hours
-      if(today.getDate() === currentDate.getDate()){
-        currentDate.setHours(currentDate.getHours() > 10 ? currentDate.getHours()+1 :10)
-        currentDate.setMinutes(currentDate.getMinutes() > 30 ? 30 :0)
-      }else{
-        currentDate.setHours(10)
-        currentDate.setMinutes(0)
-      }
-        
-      let timeSlots =[]
-      while (currentDate < endTime){
-      let formattedTime = currentDate.toLocaleDateString([], {hour:"2-digit", minute:"2-digit"})
-      // add slot to array
-      timeSlots.push({
+    while (currentDate < endTime) {
+      let formattedTime = currentDate.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      });
+      slots.push({
         datetime: new Date(currentDate),
-        time:formattedTime
-      })
-
-      // increment current time by 30 minutes
-      currentDate.setMinutes(currentDate.getMinutes() + 30)
-     }
-
-     setdocSlots(prev =>([...prev, timeSlots]))
+        time: formattedTime,
+      });
+      currentDate.setMinutes(currentDate.getMinutes() + 30);
     }
-
-  }
+    setDocSlots(slots);
+  };
 
   useEffect(() => {
     fetchDocInfo();
+    getAvailableSlots(date);
   }, [doctors, docId]);
 
-  useEffect(()=>{
-    getAvailableSlots()
-  },[docInfo])
+  const handleDateChange = (selectedDate) => {
+    setDate(selectedDate);
+    setSelectedSlot(null);
+    getAvailableSlots(selectedDate);
+  };
 
-useEffect(()=>{
-  console.log(docSlots);
-  
-},[docSlots])
+  const handleSlotSelect = (slot) => {
+    setSelectedSlot(slot);
+  };
 
-  return docInfo && (
-    <div className="container">
-      <div className="row mt-5 py-5">
-        <div className="col-12 col-md-5">
-          <img className="img-fluid w-50 rounded" src={docInfo.image} alt="" style={{ background: "#a6f0f0" }} />
-        </div>
+  const handleSubmit = () => {
+    if (selectedSlot) {
+      const appointmentDetails = {
+        id: new Date().getTime(),
+        name: docInfo.name,
+        speciality: docInfo.speciality,
+        dateTime: `${date.toDateString()} | ${selectedSlot.time}`,
+        image: docInfo.image,
+      };
+      addAppointment(appointmentDetails);
+      setBooked(true);
+      setTimeout(() => {
+        toast.success(
+          `Booking confirmed for ${
+            selectedSlot.time
+          } on ${date.toDateString()} with ${docInfo.name}`
+        );
+        setTimeout(() => {
+          navigate("/my-appointment");
+        }, 2000);
+      });
+    } else {
+      toast.error("Please select a time slot.");
+    }
+  };
 
-        <div className="col-12 col-md-7 border success rounded p-3">
-          <p className="fs-4">
-            {docInfo.name} <img className="icon" src={Icon} alt="Verified" />
-          </p>
-          <div className="d-flex gap-2 align-items-center">
-            <p>{docInfo.degree} - {docInfo.speciality}</p>
-            <button className="btn btn-outline-success btn-sm">{docInfo.experience}</button>
+  const handleCancel = () => {
+    setBooked(false);
+    setSelectedSlot(null);
+    toast.info("Booking cancelled.");
+  };
+
+  return (
+    docInfo && (
+      <div className="container">
+        <ToastContainer
+          className="custom-toast"
+          position="top-center"
+          autoClose={3000}
+          hideProgressBar
+          closeOnClick
+          draggable
+          pauseOnHover
+        />
+        <div className="row mt-5 py-5">
+          <div className="col-12 col-md-5">
+            <img
+              className="img-fluid w-50 rounded"
+              src={docInfo.image}
+              alt=""
+              style={{ background: "#a6f0f0" }}
+            />
           </div>
 
-          <div>
-            <p className='d-flex gap-1 '>About <img className="icon" src={info} alt="Info" /></p>
-            <p>{docInfo.about}</p>
-          </div>
-          <p>
-            Appointment fee: <span>{currencySymbol}{docInfo.fees}</span>
-          </p>
-        </div>
-      </div>
-      {/* Booking slots */}
-      <div>
-        <p className='fw-bold fs-5'>Booking slots</p>
-        <div className='d-flex gap-3 flex-wrap mt-3'>
-          {docSlots.length > 0 && docSlots.map((item, index) => (
-            <div
-              onClick={() => setSlotIndex(index)}
-              className={`text-center px-3 py-2 rounded-pill cursor-pointer ${slotIndex === index ? 'bg-success text-white' : 'border success'}`}
-              key={index}
-              style={{ cursor: 'pointer' }} 
-            >
-              <p>{item[0] && daysOfWeek[item[0].datetime.getDay()]}</p>
-              <p>{item[0] && item[0].datetime.getDate()}</p>
-            </div>
-          ))}
-        </div>
-
-        <div className='d-flex w-100 flex-wrap gap-3 mt-4'>
-          {docSlots.length && docSlots[slotIndex].map((item,index)=>(
-          <p onClick={()=>setSlotTime(item.time)} className={`px-2 py-2 rounded-pill ${item.time === slotTime ? 'bg-success' : 'border border-success'}`}style={{ cursor: 'pointer' }} 
-          key={index}>
-              {item.time.toLowerCase()}
+          <div className="col-12 col-md-7 border success rounded p-3">
+            <p className="fs-4">
+              {docInfo.name} <img className="icon" src={Icon} alt="Verified" />
             </p>
-          ))}
-        </div>
-        <button className='bg-success text-white  rounded-pill border px-4 py-2'>Book an Apppointment</button>
-      </div>
-      {/* related doctors */}
-      <RelatedDoctors docId={docId} speciality={docInfo.speciality}/>
+            <div className="d-flex gap-2 align-items-center">
+              <p>
+                {docInfo.degree} - {docInfo.speciality}
+              </p>
+              <button className="btn btn-outline-success btn-sm">
+                {docInfo.experience}
+              </button>
+            </div>
 
-    </div>
+            <div>
+              <p className="d-flex gap-1">
+                About <img className="icon" src={info} alt="Info" />
+              </p>
+              <p>{docInfo.about}</p>
+            </div>
+            <p>
+              Appointment fee:{" "}
+              <span>
+                {currencySymbol}
+                {docInfo.fees}
+              </span>
+            </p>
+          </div>
+        </div>
+
+        {/* Booking Section */}
+        <div className="d-flex flex-wrap mt-4">
+          <div className="calendar-container me-4">
+            <h3 className="mb-5">Book Appointment</h3>
+            <h6>
+              <BiSolidCalendar className="text-success" /> Select Date
+            </h6>
+            <Calendar onChange={handleDateChange} value={date} />
+          </div>
+          <div className="time-slots-container">
+            <h6 className="mt-5 pt-4">
+              <ImAlarm className="text-success" /> Select a Time Slot
+            </h6>
+            <div className="time-slot-day">
+              <div className="time-slot-box">
+                <div className="d-flex flex-wrap">
+                  {docSlots.map((slot, index) => (
+                    <div key={index} className="time-slot-container">
+                      <button
+                        onClick={() => handleSlotSelect(slot)}
+                        className={`btn ${
+                          selectedSlot === slot
+                            ? "btn-success"
+                            : "btn-outline-secondary"
+                        } mx-2 my-1 rounded-pill`}
+                        style={{
+                          minWidth: "100px",
+                          width: "100%",
+                          padding: "10px",
+                        }}
+                      >
+                        {slot.time}
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            {booked ? (
+              <div>
+                <button onClick={handleCancel} className="btn btn-danger mt-3">
+                  Cancel Booking
+                </button>
+              </div>
+            ) : (
+              <div>
+                <button onClick={handleSubmit} className="btn btn-success mt-3">
+                  Submit Booking
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Related Doctors */}
+        <RelatedDoctors docId={docId} speciality={docInfo.speciality} />
+      </div>
+    )
   );
 };
 

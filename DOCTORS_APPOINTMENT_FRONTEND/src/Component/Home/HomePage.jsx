@@ -7,8 +7,8 @@ import BookAppointment from '../Book Appointment/BookAppointment';
 const HomePage = () => {
   return (
     <>
-      <div className='container-fluid d-flex flex-column flex-lg-row align-items-center'>
-        <div className='text-section d-flex flex-column col-lg-6 col-12 p-3'>
+      <div className='container-fluid d-flex flex-column flex-lg-row align-items-center' style={{minHeight:"550px", background:"#a6f0f0", alignItems:"center"}}>
+        <div className='text-section d-flex flex-column col-lg-6 col-12 p-3' >
 
           <div className='Homepagetext'>
             <p className=' fw-bold' style={{ color: "#084949" }}>

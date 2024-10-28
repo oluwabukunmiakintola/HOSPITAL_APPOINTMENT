@@ -82,7 +82,7 @@ const Signup = () => {
               <h2>Hospital</h2>
             </div>
           </div>   
-        <h4 className='mt-2' style={{color:" #008080"}}>Create an account</h4>
+        <h4 className='mt-2' style={{color:" #008080"}}>Create account to book appointment</h4>
         <form onSubmit={formik.handleSubmit}>
           <div className="form-group">
             <input
