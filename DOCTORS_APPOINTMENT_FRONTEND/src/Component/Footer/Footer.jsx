@@ -28,7 +28,7 @@ const Footer = () => {
         <div className="col-lg-4 col-md-6 mb-4 px-5">
           <h5 style={{ color: "#0e4747" }}>Get in Touch</h5>
           <ul className="list-unstyled"style={{cursor:"pointer"}}>
-            <li>+234-355-173-99</li>
+            <li>(020) 123-456-789</li>
             <li>WinField@gmail.com</li>
           </ul>
         </div>

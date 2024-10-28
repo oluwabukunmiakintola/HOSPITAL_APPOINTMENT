@@ -16,9 +16,9 @@ const Contact = () => {
         </div>
         <div className='col-md-6'>
           <p className='fw-bold'>OUR OFFICE</p>
-          <p>54 William street <br />Ogbomoso, Oyo state, Nigeria</p>
-          <p>Tel: (234) 903-551-7399 <br /> Email: trinitycare@gmail.com</p>
-          <p className='fw-bold'>Careers at TRINITY CARE</p>
+          <p> Oxford street <br />Westminster, London</p>
+          <p>Tel: (020) 123-456-789 <br /> Email: WinField@gmail.com</p>
+          <p className='fw-bold'>Careers at WINFIELD</p>
           <p>Learn more about our teams and job openings.</p>
           <button className='py-2 custom-hover-bg'>Explore Jobs</button>
         </div>

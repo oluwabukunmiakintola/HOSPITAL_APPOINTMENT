@@ -15,7 +15,7 @@ const About = () => {
         </div>
         <div className="col-12 col-md-6 p-5" >
           <p>
-            At Trinity Care Hospital, we are dedicated to providing exceptional
+            At <b>WinField</b> Hospital, we are dedicated to providing exceptional
             healthcare services to our community. Established in 2010, our
             hospital has a rich history of delivering compassionate and
             comprehensive medical care. Our state-of-the-art facility is
@@ -37,7 +37,7 @@ const About = () => {
           <b style={{ color: "#008080"  }}>Our Vision</b>
 
           <p>
-            At Trinity Care Hospital, our vision is to be a leading healthcare provider recognized for excellence in patient care, innovation, and community engagement. We aspire to create a healthier future for our community by delivering compassionate, high-quality medical services that are accessible to all.
+            At <b>WinField</b>, our vision is to be a leading healthcare provider recognized for excellence in patient care, innovation, and community engagement. We aspire to create a healthier future for our community by delivering compassionate, high-quality medical services that are accessible to all.
           </p>
         </div>
       </div>

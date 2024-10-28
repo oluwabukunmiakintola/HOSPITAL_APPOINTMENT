@@ -5,8 +5,7 @@ import * as yup from 'yup';
 import axios from 'axios';
 import Tlogo from "../../assets/Tlogo.png";
 
-
-
+// Validation schema
 const validationSchema = yup.object({
   email: yup.string()
     .required('Email is required')
@@ -16,30 +15,34 @@ const validationSchema = yup.object({
 });
 
 const SignIn = () => {
-  let url = "https://hospital-ooo.vercel.app/user/login"
-  const users = JSON.parse(localStorage.getItem("userData"))||[];
+  const url = "https://hospital-ooo.vercel.app/user/login";
   const navigate = useNavigate();
+  
   const formik = useFormik({
     initialValues: { 
       email: '',
       password: ''
     },
     onSubmit: (values) => { 
-        if(users.email === users.email && users.password === users.password ){
-          console.log('sign in successful');
-          navigate('/Dashboard');
-        }else{          
+      axios.post(url, values)
+        .then(response => {
+          const { data } = response; // Adjust based on your response structure
+          
+          // Assuming your API returns a success flag and a document ID
+          if (data.success) {
+            console.log('Sign in successful');
+            const docId = data.docId; // Adjust based on your API response
+            navigate(`/appointment/${docId}`); // Navigate to appointment with docId
+          } else {
             formik.setFieldError('email', 'Invalid email or password');
             formik.setFieldError('password', 'Invalid email or password');
-        }
-        axios.post(url,values)
-        .then(()=>{
-          console.log(response);
+          }
         })
-        .catch(()=>{
-          console.log(err);
-          
-        })
+        .catch(err => {
+          console.error(err);
+          formik.setFieldError('email', 'Invalid email or password');
+          formik.setFieldError('password', 'Invalid email or password');
+        });
     },
     validationSchema
   });
@@ -48,18 +51,18 @@ const SignIn = () => {
     <div className="signup-container">
       <div className="glassmorphism-card">
         <div className='d-flex'>
-        <img
+          <img
             src={Tlogo}
             alt="Trinity Care Logo"
             className="logo img-fluid"
             style={{ width: '40px', cursor: "pointer" }} 
             onClick={() => navigate('/')}
           />
-            <div className="logo-text">
-              <h1>WinField</h1>
-              <h2>Hospital</h2>
-            </div>
+          <div className="logo-text">
+            <h1>WinField</h1>
+            <h2>Hospital</h2>
           </div>
+        </div>
         <h4 className='mt-2' style={{color:" #008080"}}>Login your account to book appointment</h4>
 
         <form onSubmit={formik.handleSubmit}>
@@ -95,11 +98,10 @@ const SignIn = () => {
             {formik.isSubmitting ? 'Signing In...' : 'Sign In'}
           </button>
 
-          <p className='mt-3'  style={{color:" #008080"}}>
+          <p className='mt-3' style={{color:" #008080"}}>
             Don't have an account? 
             <Link to="/user/signup" className='SignInLink fw-bold'>Sign up</Link>
           </p>
-          
         </form>
       </div>
     </div>
