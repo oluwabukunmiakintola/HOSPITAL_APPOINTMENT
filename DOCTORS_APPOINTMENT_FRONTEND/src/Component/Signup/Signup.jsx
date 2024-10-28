@@ -4,6 +4,8 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
 import swal from "sweetalert"
+import Tlogo from "../../assets/Tlogo.png";
+
 
 const validationSchema = yup.object({
   firstName: yup.string()
@@ -75,13 +77,19 @@ const Signup = () => {
   return (
     <div className="signup-container">
       <div className="glassmorphism-card">
-      <div className="logo-container">
-            {/* <div className="trinity-knot"></div>   */}
+      <div className='d-flex'>
+        <img
+            src={Tlogo}
+            alt="Trinity Care Logo"
+            className="logo img-fluid"
+            style={{ width: '40px', cursor: "pointer" }} 
+            onClick={() => navigate('/')}
+          />
             <div className="logo-text">
-              <h1>Trinity Care</h1>
+              <h1>WinField</h1>
               <h2>Hospital</h2>
             </div>
-          </div>   
+          </div>
         <h4 className='mt-2' style={{color:" #008080"}}>Create account to book appointment</h4>
         <form onSubmit={formik.handleSubmit}>
           <div className="form-group">

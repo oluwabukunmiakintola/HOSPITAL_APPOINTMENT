@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
+import Tlogo from "../../assets/Tlogo.png";
+
 
 
 const validationSchema = yup.object({
@@ -45,13 +47,18 @@ const SignIn = () => {
   return (
     <div className="signup-container">
       <div className="glassmorphism-card">
-        <div>
-           <div className="logo-container">
+        <div className='d-flex'>
+        <img
+            src={Tlogo}
+            alt="Trinity Care Logo"
+            className="logo img-fluid"
+            style={{ width: '40px', cursor: "pointer" }} 
+            onClick={() => navigate('/')}
+          />
             <div className="logo-text">
-              <h1>Trinity Care</h1>
+              <h1>WinField</h1>
               <h2>Hospital</h2>
             </div>
-          </div>    
           </div>
         <h4 className='mt-2' style={{color:" #008080"}}>Login your account to book appointment</h4>
 
@@ -90,7 +97,7 @@ const SignIn = () => {
 
           <p className='mt-3'  style={{color:" #008080"}}>
             Don't have an account? 
-            <Link to="/signup" className='SignInLink fw-bold'>Sign up</Link>
+            <Link to="/user/signup" className='SignInLink fw-bold'>Sign up</Link>
           </p>
           
         </form>
