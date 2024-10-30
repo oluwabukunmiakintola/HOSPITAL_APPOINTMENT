@@ -15,7 +15,7 @@ const validationSchema = yup.object({
 });
 
 const SignIn = () => {
-  const url = "https://hospital-ooo.vercel.app/user/sigin";
+  const url = "https://hospital-ooo.vercel.app/user/signin";
   const navigate = useNavigate();
   
   const formik = useFormik({
