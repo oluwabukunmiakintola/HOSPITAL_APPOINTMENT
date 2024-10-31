@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
-import Tlogo from "../../assets/Tlogo.png";
+import Tlogo from "../../../assets/Tlogo.png";
+
 
 // Validation schema
 const validationSchema = yup.object({
@@ -14,8 +15,10 @@ const validationSchema = yup.object({
     .required('Password is required')
 });
 
-const SignIn = () => {
-  const url = "https://hospital-ooo.vercel.app/user/login";
+const AdminSignup = () => {
+    const [state, setState] = useState("Admin");
+
+  const url = "https://hospital-ooo.vercel.app/user/AdminSignup";
   const navigate = useNavigate();
   
   const formik = useFormik({
@@ -31,7 +34,7 @@ const SignIn = () => {
           if (data.success) {
             console.log('Sign in successful');
             const docId = data.docId; 
-            navigate(`/appointment/${docId}`); 
+            navigate('/admin/Dashboard'); 
           } else {
             formik.setFieldError('email', 'Invalid email or password');
             formik.setFieldError('password', 'Invalid email or password');
@@ -49,22 +52,47 @@ const SignIn = () => {
   return (
     <div className="signup-container">
       <div className="glassmorphism-card">
-        <div className='d-flex'>
+        <div className='text-center'>
           <img
             src={Tlogo}
-            alt="Trinity Care Logo"
+            alt="Winfield Logo"
             className="logo img-fluid"
             style={{ width: '40px', cursor: "pointer" }} 
-            onClick={() => navigate('/')}
+            // onClick={() => navigate('/')}
           />
           <div className="logo-text">
-            <h1>WinField</h1>
-            <h2>Hospital</h2>
+            <h1>WinField <span style={{color:" #2890cd"}}>Hospital</span></h1>
           </div>
         </div>
-        <h4 className='mt-2' style={{color:" #008080"}}>Login your account to book appointment</h4>
+        <p className="text-center fw-bold mt-3" style={{color:" #008080"}}><span>{state}</span> Signup</p>
 
         <form onSubmit={formik.handleSubmit}>
+          <div className="form-group">
+            <input
+              type="email"
+              name="email"
+              placeholder="First Name"
+              {...formik.getFieldProps('email')}
+              className={`formInput ${formik.touched.email && formik.errors.email ? 'is-invalid' : ''}`}
+              aria-describedby="emailHelp"
+            />
+            {formik.touched.email && formik.errors.email ? (
+              <div id="emailHelp" className="invalid-feedback">{formik.errors.email}</div>
+            ) : null}
+          </div>
+          <div className="form-group">
+            <input
+              type="email"
+              name="email"
+              placeholder="Last Name"
+              {...formik.getFieldProps('email')}
+              className={`formInput ${formik.touched.email && formik.errors.email ? 'is-invalid' : ''}`}
+              aria-describedby="emailHelp"
+            />
+            {formik.touched.email && formik.errors.email ? (
+              <div id="emailHelp" className="invalid-feedback">{formik.errors.email}</div>
+            ) : null}
+          </div>
           <div className="form-group">
             <input
               type="email"
@@ -94,17 +122,23 @@ const SignIn = () => {
           </div>
 
           <button type="submit" className='mt-3' disabled={formik.isSubmitting}>
-            {formik.isSubmitting ? 'Signing In...' : 'Sign In'}
+            {formik.isSubmitting ? 'Signing Up...' : 'Sign Up'}
           </button>
 
-          <p className='mt-3' style={{color:" #008080"}}>
+          {
+            state === "Admin" 
+              ? <p className='text-bold'>Doctor Login? <span className='underline' onClick={() => setState("Doctor")} style={{ cursor: "pointer", color:"#008080" }}>Click here</span></p>
+              : <p>Admin Login? <span className=' underline' onClick={() => setState("Admin")} style={{ cursor: "pointer",color:"#008080"  }}>Click here</span></p>
+          }
+
+          {/* <p className='mt-3' style={{color:" #008080"}}>
             Don't have an account? 
             <Link to="/user/signup" className='SignInLink fw-bold'>Sign up</Link>
-          </p>
+          </p> */}
         </form>
       </div>
     </div>
   );
 };
 
-export default SignIn;
+export default AdminSignup;
