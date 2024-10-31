@@ -117,11 +117,11 @@ const logInUser = async (req, res) => {
     // check for email
     const user = await userModel.findOne({ email })
     if (!user) {
-        return res.status(400).json({ message: "Invalid email or password" })
+        return res.status(400).json({ message: "User not Registered " })
     }
 
     // compare passwords
-    const isValidPassword = await bcrypt.compare(password, user.password)
+    const isValidPassword = await bcrypt.compare(password, logInUser.password)
     if (!isValidPassword) {
         return res.status(400).json({ message: "Invalid email or password" })
     }
