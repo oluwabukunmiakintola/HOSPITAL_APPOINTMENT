@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import {Link, useNavigate } from 'react-router-dom';
+import { useNavigate, Link} from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Tlogo from "../../../assets/Tlogo.png";
-
 
 const AdminLogin = () => {
   const [state, setState] = useState("Admin");
@@ -23,7 +22,7 @@ const AdminLogin = () => {
       if (email === 'moyinoluwaadigun390@gmail.com' && password === 'Moyin123') {
         localStorage.setItem('adminToken', 'exampleToken');
         console.log('Login successful, navigating to dashboard...');
-        navigate('/admin/dashboard'); 
+        navigate('/admin/dashboard');
       } else {
         alert('Invalid credentials');
       }
@@ -31,23 +30,22 @@ const AdminLogin = () => {
   });
 
   return (
-    <div className="d-flex justify-content-center align-items-center  signup-container">
+    <div className="d-flex justify-content-center align-items-center signup-container">
       <div className="col-12 col-sm-8 col-md-6 col-lg-4 glassmorphism-card">
-        <form className='' onSubmit={formik.handleSubmit}>
+        <form onSubmit={formik.handleSubmit}>
           <div className='text-center'>
-        <img
-            src={Tlogo}
-            alt="Winfield Logo"
-            className="logo img-fluid"
-            style={{ width: '40px', cursor: "pointer" }} 
-            // onClick={() => navigate('/')}
-          />
+            <img
+              src={Tlogo}
+              alt="Winfield Logo"
+              className="logo img-fluid"
+              style={{ width: '40px', cursor: "pointer" }} 
+            />
           </div>
 
-           <div className="logo-text text-center">
-            <h1>WinField <span style={{color:" #2890cd"}}> Hospital</span></h1>
+          <div className="logo-text text-center">
+            <h1>WinField <span style={{color:" #2890cd"}}>Hospital</span></h1>
           </div>
-          <p className="text-center fw-bold mt-3" style={{color:"  #008080"}}>{state} Login</p>
+          <p className="text-center fw-bold mt-3" style={{color:" #008080"}}>{state} Login</p>
 
           <div>
             <p>Email</p>
@@ -59,9 +57,9 @@ const AdminLogin = () => {
               onBlur={formik.handleBlur} 
               value={formik.values.email} 
             />
-            {formik.touched.email && formik.errors.email ? (
+            {formik.touched.email && formik.errors.email && (
               <div className="text-danger">{formik.errors.email}</div>
-            ) : null}
+            )}
           </div>
 
           <div>
@@ -74,21 +72,26 @@ const AdminLogin = () => {
               onBlur={formik.handleBlur} 
               value={formik.values.password} 
             />
-            {formik.touched.password && formik.errors.password ? (
+            {formik.touched.password && formik.errors.password && (
               <div className="text-danger">{formik.errors.password}</div>
-            ) : null}
+            )}
           </div>
 
           <button type="submit" className="btn btn-success mt-3">
             Login
           </button>
 
-          {
-            state === "Admin" 
-              ? <p className='mt-3'>Doctor Login? <span  onClick={() => setState("Doctor")} style={{ cursor: "pointer", color:" #008080" }}>Click here</span></p>
-              : <p className='mt-3'>Admin Login? <span  onClick={() => setState("Admin")} style={{ cursor: "pointer", color:" #008080" }}>Click here</span></p>
-          }
-            <p className='mt-3' style={{color:" #008080"}}>
+          {state === "Admin" ? (
+            <p className='mt-3'>
+              Doctor Login? <span onClick={() => setState("Doctor")} style={{ cursor: "pointer", color:" #008080" }}>Click here</span>
+            </p>
+          ) : (
+            <p className='mt-3'>
+              Admin Login? <span onClick={() => setState("Admin")} style={{ cursor: "pointer", color:" #008080" }}>Click here</span>
+            </p>
+          )}
+
+          <p className='mt-3' style={{color:" #008080"}}>
             Don't have an account? 
             <Link to="/admin/signup" className='SignInLink fw-bold'>Sign up</Link>
           </p>

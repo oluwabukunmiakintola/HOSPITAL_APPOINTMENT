@@ -25,45 +25,43 @@ const SignIn = () => {
       password: ''
     },
     validationSchema,
-    onSubmit: async (values) => { 
+    onSubmit: (values) => { 
       setLoading(true);  
 
-      try {
-        const response = await axios.post(url, values);
-        const { data } = response; 
-        
-        if (data.success) {
-          Swal.fire({
-            title: 'Success!',
-            text: 'Sign in successful',
-            icon: 'success',
-            confirmButtonText: 'OK'
-          });
-          const docId = data.docId; 
-          navigate(`/appointment/${docId}`); 
-        } else {
+      axios.post(url, values)
+        .then((result) => {
+          const { data } = result; 
+          
+          if (data.success) {
+            Swal.fire({
+              title: 'Success!',
+              text: 'Sign in successful',
+              icon: 'success',
+              confirmButtonText: 'OK'
+            });
+            const docId = data.docId; 
+            navigate(`/appointment/${docId}`); 
+          } else {
+            Swal.fire({
+              title: 'Error!',
+              text: 'Invalid email or password',
+              icon: 'error',
+              confirmButtonText: 'Try Again'
+            });
+          }
+        })
+        .catch((err) => {
+          console.error(err);
           Swal.fire({
             title: 'Error!',
-            text: 'Invalid email or password',
+            text: 'An error occurred. Please try again later.',
             icon: 'error',
-            confirmButtonText: 'Try Again'
+            confirmButtonText: 'OK'
           });
-          formik.setFieldError('email', 'Invalid email or password');
-          formik.setFieldError('password', 'Invalid email or password');
-        }
-      } catch (err) {
-        console.error(err.response ? err.response.data : err);
-        Swal.fire({
-          title: 'Error!',
-          text: 'An error occurred. Please try again later.',
-          icon: 'error',
-          confirmButtonText: 'OK'
+        })
+        .finally(() => {
+          setLoading(false); 
         });
-        formik.setFieldError('email', 'Invalid email or password');
-        formik.setFieldError('password', 'Invalid email or password');
-      } finally {
-        setLoading(false);  
-      }
     },
   });
 

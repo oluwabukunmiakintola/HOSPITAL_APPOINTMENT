@@ -1,5 +1,7 @@
+import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
+import './AdminSidebar.css';
 import 'react-toastify/dist/ReactToastify.css'; 
 import 'bootstrap/dist/css/bootstrap.css';
 import "react-calendar/dist/Calendar.css";
@@ -19,9 +21,27 @@ import AdminSignup from './Component/Admin/AdminSignup/AdminSignup';
 import AdminLogin from './Component/Admin/AdminLogin/AdminLogin';
 import AdminDashboard from './Component/Admin/AdminDashboard/AdminDashboard';
 import AdminLayout from './Component/Admin/AdminLayout/AdminLayout';
+import AdminNavbar from './Component/Admin/AdminNavbar/AdminNavbar';
+import DoctorsList from './Component/Admin/DoctorsList/DoctorsList'; 
+import AllAppointment from './Component/Admin/AllAppointment/AllAppointment'
+import AddedDoctors from './Component/Admin/AddedDoctors/AddedDoctors'; 
 
 function App() {
-  const isAdminLoggedIn = !!localStorage.getItem('adminToken'); 
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('adminToken');
+    if (token) {
+      setIsAdminLoggedIn(true); 
+    } else {
+      setIsAdminLoggedIn(false); 
+    }
+  }, []); 
+
+  const handleLogout = () => {
+    localStorage.removeItem('adminToken'); 
+    setIsAdminLoggedIn(false); 
+  };
 
   return (
     <>
@@ -33,11 +53,11 @@ function App() {
           <Route path="signup" element={<Signup />} />
         </Route>
 
-        {/* Main Layout */}
+        {/* Main Layout for non-admin pages */}
         <Route path='/' element={<Layout />}>
           <Route path='' element={<HomePage />} />
           <Route path="doctors" element={<Doctors />} />
-          <Route path="doctors/:speciality" element={<Doctors />} />git 
+          <Route path="doctors/:speciality" element={<Doctors />} />
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
           <Route path="my-profile" element={<MyProfile />} />
@@ -47,11 +67,60 @@ function App() {
 
         {/* Admin Layout */}
         <Route path='/admin' element={<AdminLayout />}>
+          <Route
+            path='dashboard'
+            element={
+              isAdminLoggedIn ? (
+                <>
+                  <AdminNavbar handleLogout={handleLogout} />
+                  <AdminDashboard />
+                </>
+              ) : (
+                <Navigate to="/admin/login" />
+              )
+            }
+          />
+          <Route
+            path='doctors-list'
+            element={
+              isAdminLoggedIn ? (
+                <>
+                  <AdminNavbar handleLogout={handleLogout} />
+                  <DoctorsList />
+                </>
+              ) : (
+                <Navigate to="/admin/login" />
+              )
+            }
+          />
+          <Route
+            path='appointments'
+            element={
+              isAdminLoggedIn ? (
+                <>
+                  <AdminNavbar handleLogout={handleLogout} />
+                  <AllAppointment />
+                </>
+              ) : (
+                <Navigate to="/admin/login" />
+              )
+            }
+          />
+          <Route
+            path='add-doctor'
+            element={
+              isAdminLoggedIn ? (
+                <>
+                  <AdminNavbar handleLogout={handleLogout} />
+                  <AddedDoctors />
+                </>
+              ) : (
+                <Navigate to="/admin/login" />
+              )
+            }
+          />
           <Route path='signup' element={<AdminSignup />} />
           <Route path='login' element={<AdminLogin />} />
-          <Route path="dashboard" element={
-            isAdminLoggedIn ? <AdminDashboard /> : <Navigate to="/admin/login" />
-          } />
         </Route>
 
         {/* Catch-all for undefined routes */}

@@ -12,7 +12,7 @@ const validationSchema = yup.object({
     .required("Email is required")
     .email("Invalid email address"),
   password: yup.string().required("Password is required"),
-  specialization: yup.string().required("Specialization is required"), // Add validation for specialization
+  specialization: yup.string().required("Specialization is required"), 
 });
 
 const AdminSignup = () => {
@@ -25,7 +25,7 @@ const AdminSignup = () => {
     initialValues: {
       email: "",
       password: "",
-      specialization: "", // Initialize specialization
+      specialization: "", 
     },
     onSubmit: (values) => {
       axios
@@ -80,13 +80,10 @@ const AdminSignup = () => {
               className={`formInput ${
                 formik.touched.firstName && formik.errors.firstName ? "is-invalid" : ""
               }`}
-              aria-describedby="firstNameHelp"
             />
-            {formik.touched.firstName && formik.errors.firstName ? (
-              <div id="firstNameHelp" className="invalid-feedback">
-                {formik.errors.firstName}
-              </div>
-            ) : null}
+            {formik.touched.firstName && formik.errors.firstName && (
+              <div className="invalid-feedback">{formik.errors.firstName}</div>
+            )}
           </div>
 
           <div className="form-group">
@@ -98,13 +95,10 @@ const AdminSignup = () => {
               className={`formInput ${
                 formik.touched.lastName && formik.errors.lastName ? "is-invalid" : ""
               }`}
-              aria-describedby="lastNameHelp"
             />
-            {formik.touched.lastName && formik.errors.lastName ? (
-              <div id="lastNameHelp" className="invalid-feedback">
-                {formik.errors.lastName}
-              </div>
-            ) : null}
+            {formik.touched.lastName && formik.errors.lastName && (
+              <div className="invalid-feedback">{formik.errors.lastName}</div>
+            )}
           </div>
 
           <div className="form-group">
@@ -116,13 +110,10 @@ const AdminSignup = () => {
               className={`formInput ${
                 formik.touched.email && formik.errors.email ? "is-invalid" : ""
               }`}
-              aria-describedby="emailHelp"
             />
-            {formik.touched.email && formik.errors.email ? (
-              <div id="emailHelp" className="invalid-feedback">
-                {formik.errors.email}
-              </div>
-            ) : null}
+            {formik.touched.email && formik.errors.email && (
+              <div className="invalid-feedback">{formik.errors.email}</div>
+            )}
           </div>
 
           <div className="form-group">
@@ -134,13 +125,10 @@ const AdminSignup = () => {
               className={`formInput ${
                 formik.touched.password && formik.errors.password ? "is-invalid" : ""
               }`}
-              aria-describedby="passwordHelp"
             />
-            {formik.touched.password && formik.errors.password ? (
-              <div id="passwordHelp" className="invalid-feedback">
-                {formik.errors.password}
-              </div>
-            ) : null}
+            {formik.touched.password && formik.errors.password && (
+              <div className="invalid-feedback">{formik.errors.password}</div>
+            )}
           </div>
 
           <div className="form-group">
@@ -152,21 +140,18 @@ const AdminSignup = () => {
               className={`formInput ${
                 formik.touched.specialization && formik.errors.specialization ? "is-invalid" : ""
               }`}
-              aria-describedby="specializationHelp"
             />
-            {formik.touched.specialization && formik.errors.specialization ? (
-              <div id="specializationHelp" className="invalid-feedback">
-                {formik.errors.specialization}
-              </div>
-            ) : null}
+            {formik.touched.specialization && formik.errors.specialization && (
+              <div className="invalid-feedback">{formik.errors.specialization}</div>
+            )}
           </div>
 
-          <button type="submit" className="mt-3" disabled={formik.isSubmitting}>
+          <button type="submit" className="submit-btn" disabled={formik.isSubmitting}>
             {formik.isSubmitting ? "Signing Up..." : "Sign Up"}
           </button>
 
           <p className="mt-3" style={{ color: "#008080" }}>
-            Already have an account?
+            Already have an account?{" "}
             <Link to="/admin/login" className="SignInLink fw-bold">
               Login
             </Link>

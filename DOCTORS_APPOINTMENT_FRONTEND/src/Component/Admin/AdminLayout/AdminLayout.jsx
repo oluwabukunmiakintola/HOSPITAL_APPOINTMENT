@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-
+// import AdminNavbar from "../../../Component/Admin/AdminNavbar/AdminNavbar";
 
 const AdminLayout = () => {
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 3000);
+    }, 3000); // Show loader for 3 seconds
 
-    return () => clearTimeout(timer);
+    return () => clearTimeout(timer); // Cleanup the timer on unmount
   }, []);
 
   return (
@@ -18,6 +18,7 @@ const AdminLayout = () => {
       {loading ? (
         <div className="loader-container">
           <div className="loader mx-auto">
+            {/* You can customize your loader here */}
             <div className="bar1"></div>
             <div className="bar2"></div>
             <div className="bar3"></div>
@@ -34,9 +35,8 @@ const AdminLayout = () => {
         </div>
       ) : (
         <>
-          {/* <Navbar /> */}
-          <Outlet />
-          {/* <Footer /> */}
+          
+            <Outlet /> 
         </>
       )}
     </>

@@ -81,8 +81,8 @@ body{
   overflow: hidden;
 }
 .dropdown-menu {
-  width: auto; /* Allow the dropdown to adjust based on content */
-  max-width: 200px; /* Set a maximum width */
+  width: auto; 
+  max-width: 200px; 
 }
 .landingImg {
   max-width: 100%;
