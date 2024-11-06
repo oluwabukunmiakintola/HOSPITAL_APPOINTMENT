@@ -29,7 +29,7 @@ const SignIn = () => {
           const { data } = response; // Adjust based on your response structure
           
           // Assuming your API returns a success flag and a document ID
-          if (data.success) {
+          if (data.message=="Signed in successfully") {
             console.log('Sign in successful');
             const docId = data.docId; // Adjust based on your API response
             navigate(`/appointment/${docId}`); // Navigate to appointment with docId

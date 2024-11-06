@@ -127,10 +127,10 @@ const logInUser = async (req, res) => {
         if (!isValidPassword) {
             return res.status(400).json({ message: "Invalid email or password" })
         }
+        // if email & password is correct 
         res.send({ message: "Signed in successfully" })
     }
     catch (err) {
-        // if email & password is correct 
         console.log("Error Signing in user:", err);
     }
 }
