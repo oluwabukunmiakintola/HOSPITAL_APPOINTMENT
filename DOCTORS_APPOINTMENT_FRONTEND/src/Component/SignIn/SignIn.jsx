@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
 import Tlogo from "../../assets/Tlogo.png";
+import Swal from 'sweetalert2'; 
 
-// Validation schema
 const validationSchema = yup.object({
   email: yup.string()
     .required('Email is required')
@@ -15,36 +15,62 @@ const validationSchema = yup.object({
 });
 
 const SignIn = () => {
-  const url = "https://hospital-ooo.vercel.app/user/signin";
+  const url = "https://hospital-ooo.vercel.app/user/signIn";
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   
   const formik = useFormik({
     initialValues: { 
       email: '',
       password: ''
     },
+    validationSchema,
     onSubmit: (values) => { 
+      setLoading(true);  
+
       axios.post(url, values)
-        .then(response => {
-          const { data } = response; // Adjust based on your response structure
+        .then((result) => {
+          const { data } = result; 
           
+<<<<<<< HEAD
           // Assuming your API returns a success flag and a document ID
           if (data.message=="Signed in successfully") {
             console.log('Sign in successful');
             const docId = data.docId; // Adjust based on your API response
             navigate(`/appointment/${docId}`); // Navigate to appointment with docId
+=======
+          if (data.success) {
+            Swal.fire({
+              title: 'Success!',
+              text: 'Sign in successful',
+              icon: 'success',
+              confirmButtonText: 'OK'
+            });
+            const docId = data.docId; 
+            navigate(`/appointment/${docId}`); 
+>>>>>>> origin/Moyinoluwa
           } else {
-            formik.setFieldError('email', 'Invalid email or password');
-            formik.setFieldError('password', 'Invalid email or password');
+            Swal.fire({
+              title: 'Error!',
+              text: 'Invalid email or password',
+              icon: 'error',
+              confirmButtonText: 'Try Again'
+            });
           }
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err);
-          formik.setFieldError('email', 'Invalid email or password');
-          formik.setFieldError('password', 'Invalid email or password');
+          Swal.fire({
+            title: 'Error!',
+            text: 'An error occurred. Please try again later.',
+            icon: 'error',
+            confirmButtonText: 'OK'
+          });
+        })
+        .finally(() => {
+          setLoading(false); 
         });
     },
-    validationSchema
   });
 
   return (
@@ -94,8 +120,8 @@ const SignIn = () => {
             ) : null}
           </div>
 
-          <button type="submit" className='mt-3' disabled={formik.isSubmitting}>
-            {formik.isSubmitting ? 'Signing In...' : 'Sign In'}
+          <button type="submit" className='mt-3' disabled={formik.isSubmitting || loading}>
+            {loading ? 'Signing In...' : 'Sign In'}
           </button>
 
           <p className='mt-3' style={{color:" #008080"}}>

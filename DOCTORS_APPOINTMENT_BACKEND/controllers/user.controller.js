@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken")
 const dotenv = require("dotenv")
 const nodemailer = require("nodemailer")
 
-//Load data from env
+// Load data from env
 dotenv.config()
 
 //Function to generate a verification token

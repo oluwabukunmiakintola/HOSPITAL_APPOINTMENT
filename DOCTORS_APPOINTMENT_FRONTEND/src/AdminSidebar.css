@@ -1,0 +1,32 @@
+.sidebar {
+    height: 100vh;
+    background-color: #f8f9fa; 
+    padding: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .sidebar .d-flex {
+    padding: 10px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .sidebar .d-flex:hover {
+    background-color: #008080; 
+    color: #fff;
+  }
+    .sidebar .d-flex svg {
+    color: #008080; 
+  }
+    .sidebar .d-flex:hover svg {
+    color: #fff; 
+  }
+  .sidebar .d-flex p {
+    color: #008080; 
+    font-weight: 600;
+  }
+   .sidebar .d-flex:hover p {
+    color: #fff; 
+  }
+  
+  
