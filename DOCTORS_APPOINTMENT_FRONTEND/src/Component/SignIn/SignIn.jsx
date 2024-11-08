@@ -32,23 +32,11 @@ const SignIn = () => {
         .then((result) => {
           const { data } = result; 
           
-<<<<<<< HEAD
           // Assuming your API returns a success flag and a document ID
           if (data.message=="Signed in successfully") {
             console.log('Sign in successful');
             const docId = data.docId; // Adjust based on your API response
             navigate(`/appointment/${docId}`); // Navigate to appointment with docId
-=======
-          if (data.success) {
-            Swal.fire({
-              title: 'Success!',
-              text: 'Sign in successful',
-              icon: 'success',
-              confirmButtonText: 'OK'
-            });
-            const docId = data.docId; 
-            navigate(`/appointment/${docId}`); 
->>>>>>> origin/Moyinoluwa
           } else {
             Swal.fire({
               title: 'Error!',
