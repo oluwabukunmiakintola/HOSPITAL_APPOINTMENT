@@ -168,9 +168,9 @@ body{
 .glassmorphism-card {
   background: rgba(255, 255, 255, 0.2);
   border-radius: 15px;
-  padding: 20px;
+  padding: 15px;
   width: 100%;
-  max-width: 600px;
+  max-width: 500px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(15px);
   border: 1px solid rgba(255, 255, 255, 0.3);
@@ -206,7 +206,7 @@ body{
 .glassmorphism-card .formInput {
   width: calc(100% - 20px);
   padding: 12px;
-  margin: 10px 0;
+  /* margin: 10px 0; */
   border: none;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.3);
@@ -400,7 +400,7 @@ body{
 }
 .Homepagetext{
   font-size: 2.5rem;
-}
+} 
 }
 @media (max-width: 576px) {
   *{

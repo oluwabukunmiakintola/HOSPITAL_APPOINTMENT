@@ -7,8 +7,7 @@ const SpecialityMenu = () => {
     <div id="speciality" className="container mt-5">
       <h1 className="text-center">Find by Speciality</h1>
       <p className="text-center">
-        Simply browse through our extensive list of trusted doctors, schedule{" "}
-        <br />
+        Simply browse through our extensive list of trusted doctors, schedule
         your appointment hassle-free.
       </p>
 

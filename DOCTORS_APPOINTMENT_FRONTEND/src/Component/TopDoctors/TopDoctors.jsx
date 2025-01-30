@@ -1,10 +1,13 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../Context/AppContext";
+import { AuthContext } from "../Context/AuthContext";
 
 const TopDoctors = () => {
   const navigate = useNavigate();
   const { doctors } = useContext(AppContext);
+    const { user } = useContext(AuthContext);
+  
 
   return (
     <div className="container">
@@ -44,7 +47,17 @@ const TopDoctors = () => {
                 </div>
                 <p className="fw-bold">{item.name}</p>
                 <p>{item.speciality}</p>
-                <button className="btn btn-success w-100" onClick={()=>{navigate('/user/signIn')}} >Book Now</button>
+                <button className="btn btn-success w-100" 
+                onClick={()=>{
+                  if(user){
+                    navigate(`/appointment/${encodeURIComponent(item._id)}`);
+                    console.log(item._id)
+        
+                  }else{
+                    navigate('/user/signIn')
+                  }
+                }}>
+                  Book Now</button>
               </div>
             </div>
           </div>

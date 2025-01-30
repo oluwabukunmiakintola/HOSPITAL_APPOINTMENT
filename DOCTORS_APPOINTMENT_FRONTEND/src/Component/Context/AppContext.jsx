@@ -11,11 +11,6 @@ const AppContextProvider = (props) => {
         setAppointments((prev) => prev.filter(app => app.id !== id));
     };
 
-    const payForAppointment = (id) => {
-        // Implement payment logic here
-        // Return a success status for demonstration
-        return true; 
-    };
 
     const addAppointment = (appointment) => {
         setAppointments(prev => [...prev, appointment]);
@@ -35,8 +30,7 @@ const AppContextProvider = (props) => {
         appointments, 
         addAppointment, 
         cancelAppointment, 
-        payForAppointment,
-        rescheduleAppointment // Add this line
+        rescheduleAppointment 
     };
 
     return (

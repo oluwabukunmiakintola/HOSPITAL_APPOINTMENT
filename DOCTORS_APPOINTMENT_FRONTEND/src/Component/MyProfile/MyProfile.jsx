@@ -1,130 +1,116 @@
-import React, { useState } from "react";
-import profile from "../../assets/MyProfile.jpg";
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../Context/AuthContext';
 
 const MyProfile = () => {
-  const [userData, setUserData] = useState({
-    name: "Edward Victory",
-    image: profile,
-    email: "victory12@gmail.com",
-    phone: "+234 0802 0202 47",
-    address: {
-      line1: "No 4 William street",
-      line2: "Church road, Ogbomoso",
-    },
-    gender: "Female",
-    dob: "2000-06-20",
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  // Local state for edit mode and form fields
+  const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: user?.firstName || '',
+    lastName: user?.lastName || '',
+    // email: user?.email || '',
+    profilePicture: user?.profilePicture || '/default-avatar.png',
   });
 
-  const [isEdit, setIsEdit] = useState(false);
+  // Redirect if user is not logged in
+  useEffect(() => {
+    if (!user) {
+      navigate('/user/signIn');
+    }
+  }, [user, navigate]);
 
-  const handleChange = (field, value) => {
-    setUserData((prev) => ({ ...prev, [field]: value }));
+  if (!user) {
+    return <p>Redirecting to login...</p>;
+  }
+
+  // Handle input changes
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const handleAddressChange = (field, value) => {
-    setUserData((prev) => ({
-      ...prev,
-      address: { ...prev.address, [field]: value },
-    }));
+  // Handle profile picture upload (Preview Only)
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setFormData({ ...formData, profilePicture: imageUrl });
+    }
+  };
+
+  // Toggle Edit Mode
+  const toggleEdit = () => {
+    setIsEditing(!isEditing);
+  };
+
+  // Handle Save (Here you would send data to an API)
+  const handleSave = () => {
+    console.log('Saved Data:', formData);
+    setIsEditing(false);
   };
 
   return (
-    <div className="container my-5">
-      <img
-        src={userData.image}
-        alt={userData.name}
-        className="img-fluid rounded-circle mt-4"
-        style={{ width: "150px", height: "150px" }}
-      />
-      {isEdit ? (
-        <input
-          type="text"
-          value={userData.name}
-          onChange={(e) => handleChange("name", e.target.value)}
-          className="form-control mt-3"
-          // style={{ width: "200px" }} 
+    <div className="profile-container py-5 my-5 text-center">
+      <h1>Welcome, {formData.firstName}!</h1>
+      <div className="profile-details">
+        {/* Profile Picture */}
+        <img
+          src={formData.profilePicture}
+          alt="User Avatar"
+          className="profile-avatar"
+          style={{ width: '150px', borderRadius: '50%' }}
         />
-      ) : (
-        <h2>{userData.name}</h2>
-      )}
-      <hr />
-      <div>
-        <p className="fw-bold">CONTACT INFORMATION</p>
-        <p  >Email id: <span className="text-primary">{userData.email}</span></p>
-        <p>
-          Phone: {isEdit ? (
-            <input
-              type="text"
-              value={userData.phone}
-              onChange={(e) => handleChange("phone", e.target.value)}
-              className="form-control"
-              // style={{ width: "200px" }}
-            />
-          ) : (
-            userData.phone
-          )}
-        </p>
-        <p>
-          Address: {isEdit ? (
-            <>
+        {isEditing && (
+          <input type="file" accept="image/*" onChange={handleFileChange} />
+        )}
+
+        {/* Editable Form */}
+        <div className="profile-info">
+          <p>
+            <strong>First Name:</strong>{' '}
+            {isEditing ? (
               <input
-                onChange={(e) => handleAddressChange("line1", e.target.value)}
-                value={userData.address.line1}
                 type="text"
-                className="form-control mb-2"
-                placeholder="Address Line 1"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
               />
+            ) : (
+              formData.firstName
+            )}
+          </p>
+
+          <p>
+            <strong>Last Name:</strong>{' '}
+            {isEditing ? (
               <input
-                onChange={(e) => handleAddressChange("line2", e.target.value)}
-                value={userData.address.line2}
                 type="text"
-                className="form-control mb-2"
-                placeholder="Address Line 2"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
               />
-            </>
-          ) : (
-            <>
-              {userData.address.line1}
-              <br />
-              {userData.address.line2}
-            </>
-          )}
-        </p>
-      </div>
-      <div>
-        <p className="fw-bold">BASIC INFORMATION</p>
-        <p>
-          Gender: {isEdit ? (
-            <select
-              onChange={(e) => handleChange("gender", e.target.value)}
-              value={userData.gender}
-              className="form-select mb-2"
-            >
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
-          ) : (
-            userData.gender
-          )}
-        </p>
-        <p>
-          Birthday: {isEdit ? (
-            <input
-              onChange={(e) => handleChange("dob", e.target.value)}
-              value={userData.dob}
-              type="date"
-              className="form-control"
-            />
-          ) : (
-            userData.dob
-          )}
-        </p>
-      </div>
-      <div>
-        <button onClick={() => setIsEdit(!isEdit)} className="border rounded py-2 px-4 rounded-pill text-white"
-          style={{backgroundColor:" #067373"}}>
-          {isEdit ? "Save Information" : "Edit"}
+            ) : (
+              formData.lastName
+            )}
+          </p>
+
+          <p><strong>Email:</strong> {user?.email}</p>
+        </div>
+
+        {/* Edit & Save Buttons */}
+        <button onClick={toggleEdit} className="btn btn-primary m-2">
+          {isEditing ? 'Cancel' : 'Edit Profile'}
         </button>
+        {isEditing && (
+          <button onClick={handleSave} className="btn btn-success m-2">
+            Save Changes
+          </button>
+        )}
       </div>
     </div>
   );
